@@ -1,5 +1,9 @@
 from process.variables import variables
+from process.math import math
+
 FILE_PATH = "temp/code.txt"
+MATH_OPERATORS = ["*", "/", "+", "-"]
+
 variable = {}
 
 # atver latviskoto koda failu lasīšanas režīmā
@@ -16,6 +20,9 @@ with open(FILE_PATH, "r", encoding="utf-8") as file:
 
         # iegūst pirmo atslēgvārdu, ko analizēt
         first_word = line.split()[0]
+
+        if "+" in line or "-" in line or "*" in line or "/" in line:
+            math(line, variable, MATH_OPERATORS)
 
         # skatās atslēgvārdus
         match first_word:
