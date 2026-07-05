@@ -1,0 +1,5 @@
+# automātiski ģenerēts pycache
+backend/language/process/__pycache__
+
+# fails kurā stāv latviskots kods
+temp/code.txt
