@@ -35,3 +35,14 @@ mainigais t = garš_Teksts + " notika teksta concatination bez *, /, -"
 
 mainigais negativs = -3
 mainigais negativa_Aprēķins = negativs + sukrikāts
+
+mainigais operātorsAnd = patiess un patiess
+mainigais operātorsOr = nepatiess vai patiess
+mainigais vienāds = vecā_daļa vienads 2
+
+mainigais nevienāds = nepatiess
+nevienāds = negativs nevienads -3
+
+mainigais lielākais = jauns_skaitlis lielaks x
+mainigais mazāks = x mazaks y
+mainigais lielums = (x vismaz 20) un (y neparsniedz 9)

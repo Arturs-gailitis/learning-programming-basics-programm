@@ -1,8 +1,12 @@
+from shlex import split
+
 from process.variables import variables
 from process.math import math
+from process.comparison import compare
 
 FILE_PATH = "temp/code.txt"
 MATH_OPERATORS = ["*", "/", "+", "-"]
+COMPARISON_OPERATORS = ["un", "vai", "vienads", "nevienads", "lielaks", "mazaks", "vismaz", "neparsniedz"]
 
 variable = {}
 
@@ -19,7 +23,7 @@ with open(FILE_PATH, "r", encoding="utf-8") as file:
             line = line.strip()
 
         # sagriež rindu pa gabaliem
-        lineObjects = line.split()
+        lineObjects = split(line, posix=False)
 
         foundOperator = False
 
@@ -35,6 +39,21 @@ with open(FILE_PATH, "r", encoding="utf-8") as file:
             if foundOperator == False:
                 continue
 
+        if foundOperator == True:
+            continue
+        
+        # skatās vai rindā neatrodās salīdzināšanas operātors
+        for co in COMPARISON_OPERATORS:
+            for ob in lineObjects:
+
+                if ob == co:
+                    compare(line, variable, COMPARISON_OPERATORS)
+                    foundOperator = True
+                    break
+            
+            if foundOperator == False:
+                continue
+        
         if foundOperator == True:
             continue
 
