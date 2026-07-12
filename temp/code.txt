@@ -32,3 +32,6 @@ mainigais x = ((2 + 3) * 4)
 mainigais y = 8 / 2 * 2
 
 mainigais t = garš_Teksts + " notika teksta concatination bez *, /, -"
+
+mainigais negativs = -3
+mainigais negativa_Aprēķins = negativs + sukrikāts

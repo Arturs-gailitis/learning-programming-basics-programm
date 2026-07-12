@@ -18,19 +18,35 @@ with open(FILE_PATH, "r", encoding="utf-8") as file:
         else:
             line = line.strip()
 
-        # iegūst pirmo atslēgvārdu, ko analizēt
-        first_word = line.split()[0]
+        # sagriež rindu pa gabaliem
+        lineObjects = line.split()
 
-        if "+" in line or "-" in line or "*" in line or "/" in line:
-            math(line, variable, MATH_OPERATORS)
+        foundOperator = False
+
+        # skatās vai rindā neatrodās matemātisks operātors
+        for o in MATH_OPERATORS:
+            for ob in lineObjects:
+
+                if ob == o:
+                    math(line, variable, MATH_OPERATORS)
+                    foundOperator = True
+                    break
+            
+            if foundOperator == False:
+                continue
+
+        if foundOperator == True:
             continue
 
         # iegūst visu saglabāto mainīgo nosaukumus
         varNames = variable.keys()
+
+        # iegūst pirmo atslēgvārdu, ko analizēt
+        first_word = lineObjects[0]
         
         # skatās vai būs jāmaina vecajiem mainīgajiem vērtības
         for v in varNames:
-            char = line.split()
+
             if first_word == v and first_word != "mainigais":
                 variables(line, variable)
                 continue
