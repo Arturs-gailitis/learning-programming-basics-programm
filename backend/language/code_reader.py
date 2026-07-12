@@ -23,8 +23,21 @@ with open(FILE_PATH, "r", encoding="utf-8") as file:
 
         if "+" in line or "-" in line or "*" in line or "/" in line:
             math(line, variable, MATH_OPERATORS)
+            continue
+
+        # iegūst visu saglabāto mainīgo nosaukumus
+        varNames = variable.keys()
+        
+        # skatās vai būs jāmaina vecajiem mainīgajiem vērtības
+        for v in varNames:
+            char = line.split()
+            if first_word == v and first_word != "mainigais":
+                variables(line, variable)
+                continue
 
         # skatās atslēgvārdus
         match first_word:
             case "mainigais":
                 variables(line, variable)
+
+print(variable)

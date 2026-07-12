@@ -102,10 +102,6 @@ def math(line: str, var: dict, operations: list):
 
         var[characters[1]] = characters[3]
 
-    print(order)
-    print(characters)
-    print(var)
-
 
 def multiplication(first: str, second: str, var: dict, position: int, characters: list):
 

@@ -37,7 +37,37 @@ def variables(line: str, var: dict):
                 var[name] = True
             else:
                 var[name] = False
+    
+    else:
 
+        name = characters[0]
+        newValue = characters[2]
+        oldValue = None
+        variableNames = var.keys()
+
+        # iegūst vecās vērtību no konkrētā mainīgā
+        for v in variableNames:
+            if name == v:
+                oldValue = var[name]
+                break
+        
+        # skatās kurš datu tips ir vecajam mainīgajam un tad pārveido jauno vērtību lai būtu tāds pats datu tips
+        if isinstance(oldValue, bool):
+
+            if newValue == "patiess":
+                var[name] = True
+            elif newValue == "nepatiess":
+                var[name] = False 
+        
+        elif isinstance(oldValue, int):
+            var[name] = int(newValue)
+        elif isinstance(oldValue, float):
+            var[name] = float(newValue)
+        elif isinstance(oldValue, str):
+
+            text = line.split("=", 1)[1].strip()
+
+            var[name] = text.strip('"')  
 
 def isInt(variable: str) -> bool:
 

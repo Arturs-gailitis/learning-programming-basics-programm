@@ -1,0 +1,29 @@
+mainigais skaits = 5
+mainigais dala = 3.1
+
+mainigais teksts = "tētis"
+mainigais garš_Teksts = "Laba diena"
+mainigais cipars_Tekstā = "10"
+
+mainigais jā = patiess
+mainigais nē = nepatiess
+
+mainigais jauns_skaitlis = 0.0
+jauns_skaitlis = skaits + skaits / (0.1 + 0.9) + skaits * 2 - 0.1
+
+mainigais sukrikāts = dala + 0.9
+
+mainigais vecais_Skaitlis = 100
+vecais_Skaitlis = 69
+
+mainigais vecā_daļa = 7.0
+vecā_daļa = 1.9
+
+mainigais vecs_teksts = "hello"
+vecs_teksts = "Tev ir pareizi"
+
+mainigais vecs_teksta_cipars = "1"
+vecs_teksta_cipars = "3"
+
+mainigais vecais_jā = nepatiess
+vecais_jā = patiess
