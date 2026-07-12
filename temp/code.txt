@@ -27,3 +27,8 @@ vecs_teksta_cipars = "3"
 
 mainigais vecais_jā = nepatiess
 vecais_jā = patiess
+
+mainigais x = ((2 + 3) * 4)
+mainigais y = 8 / 2 * 2
+
+mainigais t = garš_Teksts + " notika teksta concatination bez *, /, -"

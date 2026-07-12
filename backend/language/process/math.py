@@ -8,6 +8,30 @@ def math(line: str, var: dict, operations: list):
 
     characters = line.replace("(", " ( ").replace(")", " ) ").split()
 
+    # skatās vai tās nav matemātiskas darbības bet teksta savienošana
+    if "+" in line:
+
+        # iegūst darbības aiz = zīmes un pirms tā 
+        action = line.split("=", 1)[1].split("+")
+        firstPart = line.split("=", 1)[0].split()
+
+        notConcatinationSimbols = False
+
+        for a in action:
+            
+            # pārbauda vai ir atsevišķi simboli, kuri neatiecās uz teksta savienošanu
+            if a == "-" or a == "*" or a == "/":
+
+                notConcatinationSimbols = True
+            
+            if notConcatinationSimbols == False:
+
+                # Pārbauda vai šajā darbībā ir vienkārš string teksts, vai arī mainīgais kuram vērtība ir string
+                if '"' in line or (a in var and isinstance(var[a], str)):
+                    
+                    concatination(firstPart, action, var)
+                    return
+
     # iziet cauri visiem matemātiskajiem operātoriem
     for o in operations:
 
@@ -185,3 +209,34 @@ def get_value(variable: str, var: dict) -> int | float:
         
     except ValueError:
         return float(variable)
+
+def concatination(firstPart: list, action: list[str], var: dict):
+
+    """
+    savieno string vērtības vienā vērtībā, jeb notiek string concatination
+    """
+
+    result = ""
+
+    for a in action:
+
+        a = a.strip()
+
+        # pārbauda vai fragments ir vērtības nosaukums
+        if a in var:
+            result = result + var[a]
+        
+        # pārbauda vai fragments ir teksts
+        if '"' in a:
+            result = result + a.replace('"', "")
+        
+    first = firstPart[0]
+    
+    # skatās vai ievieto vecajam mainīgajam jaunu vērtību vai arī ieliek jaunajam mainīgajam
+    if first != "mainigais":
+
+        var[first] = result
+    
+    else:
+
+        var[firstPart[1]] = result
