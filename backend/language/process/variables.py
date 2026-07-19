@@ -1,3 +1,5 @@
+from typing import Any
+
 def variables(line: str, var: dict):
 
     """
@@ -37,6 +39,10 @@ def variables(line: str, var: dict):
                 var[name] = True
             else:
                 var[name] = False
+        
+        elif isVariable(value, var):
+            variableValue = getVariable(value, var)
+            var[name] = variableValue
     
     else:
 
@@ -50,6 +56,12 @@ def variables(line: str, var: dict):
             if name == v:
                 oldValue = var[name]
                 break
+        
+        # skatās vai jaunais mainīgasi ir jau eksistējošā mainīgā nosaukums
+        if isVariable(newValue, var):
+            variableValue = getVariable(newValue, var)
+            var[name] = variableValue
+            return
         
         # skatās kurš datu tips ir vecajam mainīgajam un tad pārveido jauno vērtību lai būtu tāds pats datu tips
         if isinstance(oldValue, bool):
@@ -135,3 +147,25 @@ def isBool(variable: str) -> bool:
         return True
     else:
         return False
+    
+def isVariable(variable: str, var: dict) -> bool:
+
+    """
+    pārbauda vai ievietotā vērtība ir jau izveidotā mainīgā nosaukums
+    """
+
+    varNames = var.keys()
+
+    for v in varNames:
+        if variable == v:
+            return True
+    
+    return False
+    
+def getVariable(variable: str, var: dict) -> Any:
+
+    """
+    iegūst cita mainīgā vērtību
+    """
+
+    return var[variable]
