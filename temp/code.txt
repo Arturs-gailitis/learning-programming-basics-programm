@@ -46,3 +46,5 @@ nevienāds = negativs nevienads -3
 mainigais lielākais = jauns_skaitlis lielaks x
 mainigais mazāks = x mazaks y
 mainigais lielums = (x vismaz 20) un (y neparsniedz 9)
+
+mainigais mat = x + y nevienads 12.0

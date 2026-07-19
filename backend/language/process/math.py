@@ -1,4 +1,4 @@
-def math(line: str, var: dict, operations: list):
+def math(line: str, var: dict, operations: list, returnLine = False) -> None | str:
 
     """
     apstrādā matemātiskas darbības un ieliek tos vecajos vai jaunajos mainīgajos
@@ -116,6 +116,19 @@ def math(line: str, var: dict, operations: list):
                     order[index] = (next_operation, next_position - 2)
 
     name = characters[0]
+
+    # skatās vai vajag izdot izmainītu rindu
+    if returnLine == True:
+        changedLineList = []
+        changedLine = ""
+
+        for c in characters:
+            changedLineList.append(str(c))
+
+        # notiek visu elementu savienošana vienā string vērtībā, kas attēlo izmainīto rindu
+        changedLine = " ".join(changedLineList)
+        
+        return changedLine
     
     # skatās vai ievieto vecajam mainīgajam jaunu vērtību vai arī jaunajam mainīgajam
     if name != "mainigais":

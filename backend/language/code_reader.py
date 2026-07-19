@@ -25,36 +25,38 @@ with open(FILE_PATH, "r", encoding="utf-8") as file:
         # sagriež rindu pa gabaliem
         lineObjects = split(line, posix=False)
 
-        foundOperator = False
+        hasMathSimbols = False
+        hasComparisonSimbols = False
 
-        # skatās vai rindā neatrodās matemātisks operātors
-        for o in MATH_OPERATORS:
-            for ob in lineObjects:
+        # skatās vai konkrētajā līnijā ir iekļauti matemātikas vai salīdzināšanas operātori
+        for l in lineObjects:
 
-                if ob == o:
-                    math(line, variable, MATH_OPERATORS)
-                    foundOperator = True
-                    break
-            
-            if foundOperator == False:
-                continue
+            if l in MATH_OPERATORS:
+                hasMathSimbols = True
 
-        if foundOperator == True:
+            if l in COMPARISON_OPERATORS:
+                hasComparisonSimbols = True
+
+            if hasComparisonSimbols == True and hasMathSimbols == True:
+                break
+        
+        # ja abi ir iekļauti, tad sākumā izpilda matemātiku un samaina līniju un tad notiek salīdzināšana
+        if hasMathSimbols == True and hasComparisonSimbols == True:
+
+            changedLine = math(line, variable, MATH_OPERATORS, returnLine=True)
+            compare(changedLine, variable, COMPARISON_OPERATORS)
             continue
         
-        # skatās vai rindā neatrodās salīdzināšanas operātors
-        for co in COMPARISON_OPERATORS:
-            for ob in lineObjects:
+        # ja ir tikai bijusi matemātikas operātori tad tikai izpilda matemātiku
+        elif hasMathSimbols == True and hasComparisonSimbols == False:
 
-                if ob == co:
-                    compare(line, variable, COMPARISON_OPERATORS)
-                    foundOperator = True
-                    break
-            
-            if foundOperator == False:
-                continue
+            math(line, variable, MATH_OPERATORS)
+            continue
         
-        if foundOperator == True:
+        # ja ir tikai bijusi salīdzināšanas operātori tad tikai izpilda salīdzināšanu
+        elif hasMathSimbols == False and hasComparisonSimbols == True:
+            
+            compare(line, variable, COMPARISON_OPERATORS)
             continue
 
         # iegūst visu saglabāto mainīgo nosaukumus
