@@ -234,6 +234,10 @@ def getBoolValue(value: Any, var: dict) -> bool | int | float:
     elif value == "nepatiess":
         return False
     
+    # pārbauda vai dotais mainīgais nav ievietots kā cipars
+    if value.startswith('"') and value.endswith('"'):
+        return value.strip('"')
+    
     # skatās vai nevar pārveidot no teksta uz veselu ciparu vai daļskaitli
     try:
         return int(value)
