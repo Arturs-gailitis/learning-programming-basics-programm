@@ -50,3 +50,4 @@ mainigais lielums = (x vismaz 20) un (y neparsniedz 9)
 mainigais mat = x + y nevienads 12.0
 
 mainigais a = (2 * (3 + 4))
+mainigais b = x lielaks 5 un y mazaks 3

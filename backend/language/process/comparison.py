@@ -7,7 +7,9 @@ def compare(line: str, var: dict, operators: list[str], loops = False) -> None |
     apstrādā salīdzinājuma darbības un tos ieliek vecajos vai jaunajos mainīgajos vai arī if, for un while uzbūvēs
     """
 
-    brackets, noBrackets, order, = [], [], [],
+    bracketComparison, bracketAnd, bracketOr = [], [], [] 
+    comparison, andOrder, orOrder, order, = [], [], [], []
+
     result = None
 
     line = line.replace("(", " ( ").replace(")", " ) ")
@@ -32,17 +34,35 @@ def compare(line: str, var: dict, operators: list[str], loops = False) -> None |
             
             if ob == o:
 
-                # ieliek masīvos visas iespējamās salīdzināšanas darbības, skatoties vai tās atrodās iekavās vai nē
+                # ieliek masīvos visas iespējamās salīdzināšanas darbības
+                # skatoties vai tās atrodās iekavās vai arī izpilda and vai or salīdzināšanu
                 if isBracket == True:
-                    brackets.append((o, position))
+                    
+                    if ob == "un":
+                        bracketAnd.append((o, position))
+                    elif ob == "vai":
+                        bracketOr.append((o, position))
+                    else:
+                        bracketComparison.append((o, position))
                 else:
-                    noBrackets.append((o, position))
+                    
+                    if ob == "un":
+                        andOrder.append((o, position))
+                    elif ob == "vai":
+                        orOrder.append((o, position))
+                    else:
+                        comparison.append((o, position))
 
     # sakārto salīdzināšanas darbības pēc to pozīcijas rindā un pēc tam apvieno kopā
-    brackets.sort(key= lambda item: item[1])
-    noBrackets.sort(key= lambda item: item[1])
+    bracketAnd.sort(key= lambda item: item[1])
+    bracketOr.sort(key= lambda item: item[1])
+    bracketComparison.sort(key= lambda item: item[1])
 
-    order = brackets + noBrackets
+    andOrder.sort(key= lambda item: item[1])
+    orOrder.sort(key= lambda item: item[1])
+    comparison.sort(key= lambda item: item[1])
+
+    order = bracketComparison + bracketAnd + bracketOr + comparison + andOrder + orOrder
 
     # iziet cauri visām salīdzināšanas darbībām
     for operator, position in order:

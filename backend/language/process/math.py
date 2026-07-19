@@ -64,7 +64,7 @@ def math(line: str, var: dict, operations: list, returnLine = False) -> None | s
             continue
     
     # sakārto matemātisko secību šādā secībā - iekavas, matemātisko darbību prioritāte un atrašanās vieta
-    mathOrder.sort(key=lambda item: (-item[0], -item[1], item[3]))
+    mathOrder.sort(key=lambda item: (-item[0], -item[1], item[2]))
 
     # iziet cauri visām matemātikas darbībām
     for depth, priority, position, operation in mathOrder:
