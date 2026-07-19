@@ -3,6 +3,7 @@ from shlex import split
 from process.variables import variables
 from process.math import math
 from process.comparison import compare
+from process.ifBlock import checkOperations, checkBlockStatuss, ifElseBlock
 
 FILE_PATH = "temp/code.txt"
 MATH_OPERATORS = ["*", "/", "+", "-"]
@@ -22,23 +23,22 @@ with open(FILE_PATH, "r", encoding="utf-8") as file:
         else:
             line = line.strip()
 
+        ifBlockLine = ifElseBlock(line, variable, MATH_OPERATORS, COMPARISON_OPERATORS)
+
+        # skatās ja tas ir ja, citādi ja, citādi vai beigas
+        if ifBlockLine == True:
+            continue
+
+        ifBlockActive = checkBlockStatuss()
+        
+        # nostrādā ja konkrētais bloks ir atzīmēts, ka to nelasa jo nosacījums neatbilst
+        if ifBlockActive == False:
+            continue
+
         # sagriež rindu pa gabaliem
         lineObjects = split(line, posix=False)
 
-        hasMathSimbols = False
-        hasComparisonSimbols = False
-
-        # skatās vai konkrētajā līnijā ir iekļauti matemātikas vai salīdzināšanas operātori
-        for l in lineObjects:
-
-            if l in MATH_OPERATORS:
-                hasMathSimbols = True
-
-            if l in COMPARISON_OPERATORS:
-                hasComparisonSimbols = True
-
-            if hasComparisonSimbols == True and hasMathSimbols == True:
-                break
+        hasMathSimbols, hasComparisonSimbols = checkOperations(lineObjects, MATH_OPERATORS, COMPARISON_OPERATORS)
         
         # ja abi ir iekļauti, tad sākumā izpilda matemātiku un samaina līniju un tad notiek salīdzināšana
         if hasMathSimbols == True and hasComparisonSimbols == True:

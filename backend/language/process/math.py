@@ -12,7 +12,7 @@ def math(line: str, var: dict, operations: list, returnLine = False) -> None | s
     characters = line.replace("(", " ( ").replace(")", " ) ").split()
 
     # skatās vai tās nav matemātiskas darbības bet teksta savienošana
-    if "+" in line:
+    if "+" in line and "=" in line:
 
         # iegūst darbības aiz = zīmes un pirms tā 
         action = line.split("=", 1)[1].split("+")

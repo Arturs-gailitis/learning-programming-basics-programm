@@ -57,3 +57,29 @@ mainigais c = a
 c = negativs
 
 mainigais rezultats = "abc" vienads "abc"
+
+mainigais h = "test"
+
+ja 5 vienads c tad
+
+    h = "5"
+
+    ja 5 lielaks 1 tad
+
+    mainigais g = 4
+
+citadi ja c vienads -3 tad
+
+    h = "10"
+
+    ja (a + 3 nevienads 0) un (4 / 1 mazaks 0.1) tad
+
+        h = h + "1"
+
+    citadi
+
+        h = h + "6"
+    beigas
+beigas
+
+mainigais j = "if beidzās"
