@@ -4,7 +4,10 @@ def math(line: str, var: dict, operations: list, returnLine = False) -> None | s
     apstrādā matemātiskas darbības un ieliek tos vecajos vai jaunajos mainīgajos
     """
 
-    first_priority, second_priority, bracket_first, bracket_second = [], [], [], []
+    mathOrder = []
+
+    depth = 0
+    priority = 0
 
     characters = line.replace("(", " ( ").replace(")", " ) ").split()
 
@@ -32,49 +35,39 @@ def math(line: str, var: dict, operations: list, returnLine = False) -> None | s
                     concatination(firstPart, action, var)
                     return
 
-    # iziet cauri visiem matemātiskajiem operātoriem
-    for o in operations:
+    for position, c in enumerate(characters):
 
-        in_brackets = False
+        # ja atrod iekavas vaļā tad palielina iekavu dziļumu
+        if c == "(":
+            depth = depth + 1
+            continue
 
-        # iziet cauri konkrētajai rindai
-        for position, ch in enumerate(characters):
+        # ja atrod iekavas ciet tad samazina iekavu dziļumu
+        if c == ")":
+            depth = depth - 1
+            continue
 
-            # piefiksē vai nav iekavas sākušās vai beigušās
-            if ch == "(":
-                in_brackets = True
+        # ja atrod reizināšanas vai dalīšanas simbolus, tad ieliek iekšā secību sarakstā informāciju par šo darbību
+        # papildus arī norādot ka pirmie izteiksmē būs jādara
+        if c == "*" or c == "/":
+            priority = 1
 
-            elif ch == ")":
-                in_brackets = False
+            mathOrder.append([depth, priority, position, c])
+            continue
 
-            elif ch == o:
-                
-                # ieliek masīvā visas iespējamās matemātiskās darbības, skatoties vai tās atrodās iekavās
-                if in_brackets == True:
+        # ja atrod saskaitīšanas vai atņemšanas simbolus, tad ieliek iekšā secību sarakstā informāciju par šo darbību
+        # papildus arī norādot ka pēdējie izteiksmē būs jādara
+        if c == "+" or c == "-":
+            priority = 0
 
-                    # tā kā reizināšana un dalīšana ir pirmā tad tās tiek ieliktas atsevišķā masīvā
-                    if ch == "*" or ch == "/":
-                        bracket_first.append((o, position))
-                    else:
-                        bracket_second.append((o, position))
-
-                else:
-
-                    if ch == "*" or ch == "/":
-                        first_priority.append((o, position))
-                    else:
-                        second_priority.append((o, position))
-
-    # sakārto matemātiskas darbības pēc to pozīcijas rindā un pēc tam apvieno kopā
-    bracket_first.sort(key= lambda item: item[1])
-    bracket_second.sort(key= lambda item: item[1])
-    first_priority.sort(key= lambda item: item[1])
-    second_priority.sort(key= lambda item: item[1])
-
-    order = bracket_first + bracket_second + first_priority + second_priority
+            mathOrder.append([depth, priority, position, c])
+            continue
+    
+    # sakārto matemātisko secību šādā secībā - iekavas, matemātisko darbību prioritāte un atrašanās vieta
+    mathOrder.sort(key=lambda item: (-item[0], -item[1], item[3]))
 
     # iziet cauri visām matemātikas darbībām
-    for operation, position in order:
+    for depth, priority, position, operation in mathOrder:
 
         first_variable = characters[position - 1]
         second_variable = characters[position + 1]
@@ -104,16 +97,17 @@ def math(line: str, var: dict, operations: list, returnLine = False) -> None | s
 
                 brackets_removed = True
 
-        for index in range(len(order)):
-            next_operation, next_position = order[index]
+        for index in range(len(mathOrder)):
+
+            nextDepth, nextPriority, nextPosition, nextOperation = mathOrder[index]
 
             # maina visiem pozīciju, atkarībā cik daudz tika izdzēsts 
-            if next_position > position:
+            if nextPosition > position:
 
                 if brackets_removed == True:
-                    order[index] = (next_operation, next_position - 4)
+                    mathOrder[index] = (nextDepth, nextPriority, nextPosition - 4, nextOperation)
                 else:
-                    order[index] = (next_operation, next_position - 2)
+                    mathOrder[index] = (nextDepth, nextPriority, nextPosition - 2, nextOperation)
 
     name = characters[0]
 
