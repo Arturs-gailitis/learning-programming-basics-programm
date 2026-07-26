@@ -5,7 +5,7 @@ from process.math import math
 
 ifBlocks = []
 
-def checkOperations(line: list, mathOp: list, conditionOp: list) -> bool:
+def checkOperations(line: list, mathOp: list, conditionOp: list) -> tuple[bool, bool]:
     """
     skatās vai konkrētajā līnijā priekš koda blokiem ir iekļauti matemātikas vai salīdzināšanas operātori 
     """
@@ -100,11 +100,13 @@ def ifElseBlock(line: str, var: dict, mathOp: list, conditionOp: list) -> bool:
         # branchExecuted - nosaka vai konkrētais nosacījums atbilst
         # currentActive - nosaka ka konkrēto bloku var izpildīt
         # elseStatement - strādā tikai tad kad citās konkrētajā zara blokos nosacījums neatbilst 
+        # variablesBefore - pirms ja bloka izveidotie mainīgo nosaukumi,lai varētu izdzēst lokālos mainīgos
         ifBlocks.append({
             "parentActive": parentActive,
             "branchExecuted": conditionResult,
             "currentActive": parentActive and conditionResult,
-            "elseStatement": False
+            "elseStatement": False,
+            "variablesBefore": list(var.keys())
         })
 
         return True
@@ -150,6 +152,20 @@ def ifElseBlock(line: str, var: dict, mathOp: list, conditionOp: list) -> bool:
 
     # izpildās, kad beidzās ja-citadi_ja-citadi zars
     elif lineObjects[0] == "beigas":
+
+        varList = ifBlocks[-1]["variablesBefore"]
+        removedVariables = []
+
+        # atrod visus lokāli izveidotos mainīgos
+        for v in var:
+
+            if v not in varList:
+                removedVariables.append(v)
+
+        # izdzēs lokāli izveidotos mainīgos no mainīgo saraksta
+        for r in removedVariables:
+
+            var.pop(r)
 
         # izdzēš jaunāko zara informāciju
         ifBlocks.pop()

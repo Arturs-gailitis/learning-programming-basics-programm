@@ -59,6 +59,7 @@ c = negativs
 mainigais rezultats = "abc" vienads "abc"
 
 mainigais h = "test"
+mainigais ya = ""
 
 ja 5 vienads c tad
 
@@ -80,6 +81,8 @@ citadi ja c vienads -3 tad
     citadi
 
         h = h + "6"
+        mainigais yo = "yo"
+        ya = yo + " cilvēk"
     beigas
 beigas
 
@@ -91,8 +94,15 @@ mainigais e = 5 lielaks 4 un 1.1 mazaks 1.2 vai "a" nevienads "a"
 
 mainigais tests = ((5 lielaks 4))
 
+mainigais f = 0
+mainigais fa = ""
+
 ja patiess tad
-    mainigais f = 1
+    f = f + 1
+    mainigais sa = "3"
+    fa = fa + sa + " vērtība"
 citadi
-    mainigais f = 0
+    f = f - 1
+    mainigais sa = "1"
+    fa = fa + sa + " vērtība"
 beigas
