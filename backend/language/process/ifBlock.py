@@ -43,7 +43,7 @@ def checkConditions(lineObjects: list, var: dict, mathOp: list, conditionOp: lis
     # ja matemātika un salīdzināšana ir iekļauta, tad sākumā izpilda matemātiku un samaina līniju un 
     # tad notiek salīdzināšana
     if hasMath == True and hasComparison == True:
-        changedLine = math(line, var, mathOp, returnLine=True)
+        changedLine = math(line, var, returnLine=True)
         result = compare(changedLine, var, conditionOp, loops=True)
         return result
     

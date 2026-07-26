@@ -43,14 +43,14 @@ with open(FILE_PATH, "r", encoding="utf-8") as file:
         # ja abi ir iekļauti, tad sākumā izpilda matemātiku un samaina līniju un tad notiek salīdzināšana
         if hasMathSimbols == True and hasComparisonSimbols == True:
 
-            changedLine = math(line, variable, MATH_OPERATORS, returnLine=True)
+            changedLine = math(line, variable, returnLine=True)
             compare(changedLine, variable, COMPARISON_OPERATORS)
             continue
         
         # ja ir tikai bijusi matemātikas operātori tad tikai izpilda matemātiku
         elif hasMathSimbols == True and hasComparisonSimbols == False:
 
-            math(line, variable, MATH_OPERATORS)
+            math(line, variable)
             continue
         
         # ja ir tikai bijusi salīdzināšanas operātori tad tikai izpilda salīdzināšanu

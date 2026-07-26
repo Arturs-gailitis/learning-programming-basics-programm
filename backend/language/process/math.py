@@ -1,4 +1,4 @@
-def math(line: str, var: dict, operations: list, returnLine = False) -> None | str:
+def math(line: str, var: dict, returnLine = False) -> None | str:
 
     """
     apstrādā matemātiskas darbības un ieliek tos vecajos vai jaunajos mainīgajos
