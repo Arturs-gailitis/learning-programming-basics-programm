@@ -7,10 +7,10 @@ def compare(line: str, var: dict, operators: list[str], loops = False) -> None |
     apstrādā salīdzinājuma darbības un tos ieliek vecajos vai jaunajos mainīgajos vai arī if, for un while uzbūvēs
     """
 
-    bracketComparison, bracketAnd, bracketOr = [], [], [] 
-    comparison, andOrder, orOrder, order, = [], [], [], []
+    order = []
 
     result = None
+    depth = 0
 
     line = line.replace("(", " ( ").replace(")", " ) ")
 
@@ -20,52 +20,39 @@ def compare(line: str, var: dict, operators: list[str], loops = False) -> None |
     # iziet cauri visiem salīdzināšanas operātoriem
     for o in operators:
 
-        isBracket = False
-
         # iziet cauri konkrētajai rindai
         for position, ob in enumerate(lineObjects):
 
-            # piefiksē vai nav iekavas sākušās vai beigušās
+            # nosaka cik dziļi iekavās salīdzināšanas darbība būs
             if ob == "(":
-                isBracket = True
+                depth = depth + 1
+                continue
             
             if ob == ")":
-                isBracket = False
+                depth = depth - 1
+                continue
             
             if ob == o:
 
-                # ieliek masīvos visas iespējamās salīdzināšanas darbības
-                # skatoties vai tās atrodās iekavās vai arī izpilda and vai or salīdzināšanu
-                if isBracket == True:
-                    
-                    if ob == "un":
-                        bracketAnd.append((o, position))
-                    elif ob == "vai":
-                        bracketOr.append((o, position))
-                    else:
-                        bracketComparison.append((o, position))
+                # nosaka katras salīdzināšanas darbību prioritātes un ieliek kopējā sarakstā
+                if ob == "vai":
+                    priority = 0
+                    order.append((depth, priority, position, o))
+                    continue
+                elif ob == "un":
+                    priority = 1
+                    order.append((depth, priority, position, o))
+                    continue
                 else:
-                    
-                    if ob == "un":
-                        andOrder.append((o, position))
-                    elif ob == "vai":
-                        orOrder.append((o, position))
-                    else:
-                        comparison.append((o, position))
+                    priority = 2
+                    order.append((depth, priority, position, o))
+                    continue
 
-    # sakārto salīdzināšanas darbības pēc to pozīcijas rindā un pēc tam apvieno kopā
-    bracketAnd.sort(key= lambda item: item[1])
-    bracketOr.sort(key= lambda item: item[1])
-    bracketComparison.sort(key= lambda item: item[1])
-
-    andOrder.sort(key= lambda item: item[1])
-    orOrder.sort(key= lambda item: item[1])
-    comparison.sort(key= lambda item: item[1])
-
-    order = bracketComparison + bracketAnd + bracketOr + comparison + andOrder + orOrder
+    # sakārto salīdzināšanas darbības šādā secībā - iekavas, darbību prioritāte un atrašanās vieta
+    order.sort(key=lambda item: (-item[0], -item[1], item[2]))
 
     # iziet cauri visām salīdzināšanas darbībām
-    for operator, position in order:
+    for depth, priority, position, operation in order:
 
         firstVariable = lineObjects[position - 1]
         secondVariable = lineObjects[position + 1]
@@ -77,7 +64,7 @@ def compare(line: str, var: dict, operators: list[str], loops = False) -> None |
         secondValue = getBoolValue(secondVariable, var)
 
         # skatās kura salīdzināšanas operātors ir jāizmanto
-        match operator:
+        match operation:
             case "un":
                 result = logicalAnd(firstValue, secondValue)
             case "vai":
@@ -121,15 +108,15 @@ def compare(line: str, var: dict, operators: list[str], loops = False) -> None |
         # iziet cauri visām saglabātajām operātoriem
         for index in range(len(order)):
             
-            nextOperation, nextPosition = order[index]
+            nextDepth, nextPriority, nextPosition, nextOperation = order[index]
 
             # maina visiem pozīciju, atkarībā cik daudz tika izdzēsts 
             if nextPosition > position:
 
                 if bracketsRemoved == True:
-                    order[index] = (nextOperation, nextPosition - 4)
+                    order[index] = (nextDepth, nextPriority, nextPosition - 4, nextOperation)
                 else:
-                    order[index] = (nextOperation, nextPosition - 2)
+                    order[index] = (nextDepth, nextPriority, nextPosition - 2, nextOperation)
     
     # skatās vai šī funkcija netika izsaukta if/else, for un while ciklos
     if loops == False:
@@ -139,11 +126,11 @@ def compare(line: str, var: dict, operators: list[str], loops = False) -> None |
         # skatās vai ievieto vecajam mainīgajam jaunu vērtību vai arī ieliek jaunajam mainīgajam
         if name != "mainigais":
 
-            var[name] = lineObjects[2]
+            var[name] = result
         
         else:
 
-            var[lineObjects[1]] = lineObjects[3]
+            var[lineObjects[1]] = result
 
     else:
 

@@ -53,9 +53,9 @@ def checkConditions(lineObjects: list, var: dict, mathOp: list, conditionOp: lis
         return result 
     
     # nostrādās ja nosacījumā ir tikai viena vērtība
-    elif len(line) <= 2:
+    elif len(lineObjects) == 1:
 
-        result = getBoolValue(line[1], var)
+        result = getBoolValue(lineObjects[0], var)
 
         if isinstance(result, bool):
             return result

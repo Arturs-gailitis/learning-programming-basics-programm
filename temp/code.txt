@@ -84,3 +84,15 @@ citadi ja c vienads -3 tad
 beigas
 
 mainigais j = "if beidzās"
+
+mainigais d = (rezultats vienads patiess un (j nevienads "haha")) un negativs lielaks -4
+
+mainigais e = 5 lielaks 4 un 1.1 mazaks 1.2 vai "a" nevienads "a"
+
+mainigais tests = ((5 lielaks 4))
+
+ja patiess tad
+    mainigais f = 1
+citadi
+    mainigais f = 0
+beigas
