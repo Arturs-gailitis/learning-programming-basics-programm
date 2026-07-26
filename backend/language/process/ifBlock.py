@@ -185,3 +185,37 @@ def checkBlockStatuss() -> bool:
         return True
 
     return ifBlocks[-1]["currentActive"]
+
+def closeNotFinishedIfBlocks(openedIfBlockCount: int, var: dict) -> None:
+
+    """
+    atceļ atvērtos ja - citadi ja - citadi zarus
+    """
+
+    # darbosies kamēr netiks izdzēsti tie ja zari, kuri iepriekš netika reģistrēti
+    while len(ifBlocks) > openedIfBlockCount:
+
+        varList = ifBlocks[-1]["variablesBefore"]
+        removedVariables = []
+
+        # atrod visus lokāli izveidotos mainīgos
+        for v in var:
+        
+            if v not in varList:
+                removedVariables.append(v)
+        
+        # izdzēs lokāli izveidotos mainīgos no mainīgo saraksta
+        for r in removedVariables:
+        
+            var.pop(r)
+        
+        # izdzēš jaunāko zara informāciju
+        ifBlocks.pop()  
+
+def getIfBlockInformation() -> list:
+
+    """
+    iegūst pašreizējo ja - citadi ja - citadi zaru informāciju
+    """
+
+    return ifBlocks

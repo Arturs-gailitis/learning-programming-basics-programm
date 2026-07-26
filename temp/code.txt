@@ -106,3 +106,48 @@ citadi
     mainigais sa = "1"
     fa = fa + sa + " vērtība"
 beigas
+
+mainigais cikls = 0
+mainigais ifCikla = 0
+
+cikls i no 1 lidz 7:
+
+    cikls = i
+
+    ja cikls vienads 5 tad
+
+        ja skaits mazaks dala tad
+            ifCikla = cikls + 2000
+        citadi ja skaits lielaks dala tad
+            ifCikla = cikls + 2021
+        beigas
+    beigas
+beigas
+
+mainigais cikls1 = 0
+mainigais nakamais = 5
+
+cikls s no 0 lidz x:
+
+    cikls1 = s
+
+    ja s mazaks 18 tad
+
+        ja s vienads 3 tad
+            nakamais
+        citadi ja s vienads a tad
+            beidz
+        beigas
+
+    beigas
+beigas
+
+mainigais summa = 0
+
+cikls i no 1 lidz 2:
+
+    cikls mo no 1 lidz 3:
+        summa = summa + 1
+    beigas
+
+beigas
