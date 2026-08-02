@@ -158,3 +158,26 @@ cikls i no 1 lidz 10:
     mainigais be = 0 + i
     cik = be
 beigas
+
+mainigais ka = 5
+mainigais hu = ""
+
+kamer ka lielaks -10 tad
+
+    ja ka lielaks 0 tad
+        hu = "pozitīvs"
+    beigas
+
+    ja ka vienads 5 tad
+        ka = ka - 1
+        nakamais
+    beigas
+
+    mainigais qe = ka mazaks 1
+
+    ja qe vienads patiess tad
+        beidz
+    citadi ja qe vienads nepatiess tad
+        ka = ka - 1
+    beigas
+beigas

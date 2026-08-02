@@ -1,6 +1,6 @@
 from shlex import split
 
-def findForCycleEnd(CodeLines: list[str], startIndex: int) -> int:
+def findCycleEnd(CodeLines: list[str], startIndex: int) -> int:
 
     """
     iegūst indeksu, kur dotais cikls beidz strādāt
@@ -20,10 +20,15 @@ def findForCycleEnd(CodeLines: list[str], startIndex: int) -> int:
         lineObjects = split(line, posix=False)
         firstWord = lineObjects[0]
 
-        cycleBlock = firstWord == "cikls" and "lidz" in lineObjects
+        forCycleBlock = False
+        whileCycleBlock = False
+
+        # skatās vai sākas latviskotais for vai while cikls
+        forCycleBlock = firstWord == "cikls" and "lidz" in lineObjects
+        whileCycleBlock = firstWord == "kamer" and "tad" in lineObjects
 
         # nosaka kurā indeksā cikls beidzās
-        if firstWord == "ja" or cycleBlock == True:
+        if firstWord == "ja" or forCycleBlock == True or whileCycleBlock == True:
             BlockCount = BlockCount + 1
             continue
         elif firstWord == "beigas" and BlockCount > 0:

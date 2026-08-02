@@ -6,6 +6,7 @@ from process.math import math
 from process.comparison import compare
 from process.ifBlock import checkOperations, checkBlockStatuss, ifElseBlock, closeNotFinishedIfBlocks, getIfBlockInformation, removeLocalVariables
 from process.forCycle import *
+from process.whileCycle import *
 
 FILE_PATH = "temp/code.txt"
 MATH_OPERATORS = ["*", "/", "+", "-"]
@@ -13,7 +14,7 @@ COMPARISON_OPERATORS = ["un", "vai", "vienads", "nevienads", "lielaks", "mazaks"
 
 variable = {}
 
-def readCode(codeLines: list[str], cycleTime = 0, cycleStart = 0, cycleEnd = 0) -> None | str:
+def readCode(codeLines: list[str], cycleTime = 0, cycleStart = 0, cycleEnd = 0, whileLoop = False) -> None | str:
 
     """
     apstrādā latviskotā pseudokoda rindas
@@ -25,11 +26,11 @@ def readCode(codeLines: list[str], cycleTime = 0, cycleStart = 0, cycleEnd = 0) 
     index, endIndex = 0, 0
 
     # iegūst beidzamo indeksu skatoties vai to palaiž vienkārši visu kodu vai arī kā ciklu
-    if cycleTime == 0:
+    if cycleTime == 0 and whileLoop == False:
 
         endIndex = len(codeLines)
 
-    else :
+    elif cycleTime > 0 or whileLoop == True :
         index = cycleStart
         endIndex = cycleEnd
 
@@ -72,7 +73,7 @@ def readCode(codeLines: list[str], cycleTime = 0, cycleStart = 0, cycleEnd = 0) 
             savedVariables = list(variable.keys())
 
             # iegūst vajadzīgo informāciju priekš cikla
-            cycleEndIndex = findForCycleEnd(codeLines, index)
+            cycleEndIndex = findCycleEnd(codeLines, index)
             startValue, forCycleTime = findForCycleRepeatTime(line, variable)
 
             # iterē vairākas reizes cauri konkrētajam teksta diapazonam
@@ -102,8 +103,36 @@ def readCode(codeLines: list[str], cycleTime = 0, cycleStart = 0, cycleEnd = 0) 
             index = cycleEndIndex + 1
             continue
 
+        # skatās vai nesākās kamer cikls
+        if lineObjects[0] == "kamer" and lineObjects[-1] == "tad":
+
+            whileSavedVariables = list(variable.keys())
+
+            # iegūst vajadzīgo informāciju par cikla izmēriem
+            startLoopIndex = index
+            endLoopIndex = findCycleEnd(codeLines, startLoopIndex)
+
+            while True:
+
+                # skatās vai kamer nosacījums ir patiess, ja nav tad beidz kamer ciklu
+                if checkWhileCondition(codeLines, startLoopIndex, variable, MATH_OPERATORS, COMPARISON_OPERATORS) == False:
+                    break
+
+                # iterē cauri kamer cikla bloku
+                keyword = readCode(codeLines, cycleStart=startLoopIndex + 1, cycleEnd=endLoopIndex, whileLoop=True)
+                
+                if keyword == "nakamais":
+                    continue
+                elif keyword == "beidz":
+                    break
+
+            removeLocalVariables(variable, whileSavedVariables)
+
+            index = endLoopIndex + 1
+            continue
+
         # ja ciklā ir atrodami nakamais vai beidz atslēgvārdi, tad aizver ciet visus atvērtos ja zarus 
-        if cycleTime > 0:
+        if cycleTime > 0 or whileLoop == True:
             if lineObjects[0] == "nakamais":
                 closeNotFinishedIfBlocks(openedIfBlocks, variable)
                 return "nakamais"
