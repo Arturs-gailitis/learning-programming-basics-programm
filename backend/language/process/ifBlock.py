@@ -196,18 +196,9 @@ def closeNotFinishedIfBlocks(openedIfBlockCount: int, var: dict) -> None:
     while len(ifBlocks) > openedIfBlockCount:
 
         varList = ifBlocks[-1]["variablesBefore"]
-        removedVariables = []
 
-        # atrod visus lokāli izveidotos mainīgos
-        for v in var:
-        
-            if v not in varList:
-                removedVariables.append(v)
-        
-        # izdzēs lokāli izveidotos mainīgos no mainīgo saraksta
-        for r in removedVariables:
-        
-            var.pop(r)
+        # izdzēš lokāli saglabātas vērtības
+        removeLocalVariables(var, varList)
         
         # izdzēš jaunāko zara informāciju
         ifBlocks.pop()  
@@ -219,3 +210,22 @@ def getIfBlockInformation() -> list:
     """
 
     return ifBlocks
+
+def removeLocalVariables(var: dict, savedVar: list) -> None:
+
+    """
+    izdzēš lokāli saglabātās mainīgod no mainīgo saraksta
+    """
+
+    removedVariables = []
+
+    # atrod visus lokāli izveidotos mainīgos
+    for v in var:
+            
+        if v not in savedVar:
+            removedVariables.append(v)
+            
+    # izdzēs lokāli izveidotos mainīgos no mainīgo saraksta
+    for r in removedVariables:
+            
+        var.pop(r)

@@ -4,7 +4,7 @@ from re import findall
 from process.variables import variables
 from process.math import math
 from process.comparison import compare
-from process.ifBlock import checkOperations, checkBlockStatuss, ifElseBlock, closeNotFinishedIfBlocks, getIfBlockInformation
+from process.ifBlock import checkOperations, checkBlockStatuss, ifElseBlock, closeNotFinishedIfBlocks, getIfBlockInformation, removeLocalVariables
 from process.forCycle import *
 
 FILE_PATH = "temp/code.txt"
@@ -69,6 +69,8 @@ def readCode(codeLines: list[str], cycleTime = 0, cycleStart = 0, cycleEnd = 0) 
         # skatās vai nesākās cikls 
         if lineObjects[0] == "cikls" and ":" in regexFind:
 
+            savedVariables = list(variable.keys())
+
             # iegūst vajadzīgo informāciju priekš cikla
             cycleEndIndex = findForCycleEnd(codeLines, index)
             startValue, forCycleTime = findForCycleRepeatTime(line, variable)
@@ -92,6 +94,9 @@ def readCode(codeLines: list[str], cycleTime = 0, cycleStart = 0, cycleEnd = 0) 
             # izdzēš iterācijas mainīgo kad beidzās cikls
             iteration = getIteration(lineObjects, variable, value=True)
             variable.pop(iteration)
+
+            # izdzēš ciklā izveidotos mainīgos
+            removeLocalVariables(variable, savedVariables)
 
             # turpina lasīt tajā vietā, kur beidzās cikls
             index = cycleEndIndex + 1

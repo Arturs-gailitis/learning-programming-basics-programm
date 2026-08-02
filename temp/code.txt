@@ -151,3 +151,10 @@ cikls i no 1 lidz 2:
     beigas
 
 beigas
+
+mainigais cik = 0
+
+cikls i no 1 lidz 10:
+    mainigais be = 0 + i
+    cik = be
+beigas
