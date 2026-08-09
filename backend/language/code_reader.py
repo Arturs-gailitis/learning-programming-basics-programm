@@ -9,7 +9,7 @@ from process.forCycle import *
 from process.whileCycle import *
 
 FILE_PATH = "temp/code.txt"
-MATH_OPERATORS = ["*", "/", "+", "-"]
+MATH_OPERATORS = ["*", "/", "+", "-", "atlikums"]
 COMPARISON_OPERATORS = ["un", "vai", "vienads", "nevienads", "lielaks", "mazaks", "vismaz", "neparsniedz"]
 
 variable = {}

@@ -47,9 +47,9 @@ def math(line: str, var: dict, returnLine = False) -> None | str:
             depth = depth - 1
             continue
 
-        # ja atrod reizināšanas vai dalīšanas simbolus, tad ieliek iekšā secību sarakstā informāciju par šo darbību
-        # papildus arī norādot ka pirmie izteiksmē būs jādara
-        if c == "*" or c == "/":
+        # ja atrod reizināšanas, dalīšanas simbolus vai modulo atslēgvārdu, 
+        # tad ieliek iekšā secību sarakstā informāciju par šo darbību papildus arī norādot ka pirmie izteiksmē būs jādara
+        if c == "*" or c == "/" or c == "atlikums":
             priority = 1
 
             mathOrder.append([depth, priority, position, c])
@@ -78,6 +78,8 @@ def math(line: str, var: dict, returnLine = False) -> None | str:
                 multiplication(first_variable, second_variable, var, position, characters)
             case "/":
                 division(first_variable, second_variable, var, position, characters)
+            case "atlikums":
+                modulo(first_variable, second_variable, var, position, characters)
             case "+":
                 addition(first_variable, second_variable, var, position, characters)
             case "-":
@@ -134,7 +136,7 @@ def math(line: str, var: dict, returnLine = False) -> None | str:
         var[characters[1]] = characters[3]
 
 
-def multiplication(first: str, second: str, var: dict, position: int, characters: list):
+def multiplication(first: str, second: str, var: dict, position: int, characters: list) -> None:
 
     """
     izreiķina konkrētos skaitļus izmantojot reizināšanu
@@ -149,7 +151,7 @@ def multiplication(first: str, second: str, var: dict, position: int, characters
 
     characters.insert(position - 1, result)
 
-def division(first: str, second: str, var: dict, position: int, characters: list):
+def division(first: str, second: str, var: dict, position: int, characters: list) -> None:
 
     """
     izreiķina konkrētos skaitļus izmantojot dalīšanu
@@ -164,7 +166,7 @@ def division(first: str, second: str, var: dict, position: int, characters: list
 
     characters.insert(position - 1, result)
 
-def addition(first: str, second: str, var: dict, position: int, characters: list):
+def addition(first: str, second: str, var: dict, position: int, characters: list) -> None:
 
     """
     izreiķina konkrētos skaitļus izmantojot saskaitīšanu
@@ -179,7 +181,7 @@ def addition(first: str, second: str, var: dict, position: int, characters: list
 
     characters.insert(position - 1, result)
 
-def subtraction(first: str, second: str, var: dict, position: int, characters: list):
+def subtraction(first: str, second: str, var: dict, position: int, characters: list) -> None:
 
     """
     izreiķina konkrētos skaitļus izmantojot atņemšanu
@@ -192,7 +194,22 @@ def subtraction(first: str, second: str, var: dict, position: int, characters: l
 
     del characters[position - 1: position + 2]
 
-    characters.insert(position - 1, result)   
+    characters.insert(position - 1, result)
+
+def modulo(first: str, second: str, var: dict, position: int, characters: list) -> None:
+
+    """
+    izreiķina konkrētos skaitļus izmantojot modulo, jeb atlikuma operatoru
+    """
+
+    first_value = get_value(first, var)
+    second_value = get_value(second, var)
+
+    result = first_value % second_value
+
+    del characters[position - 1: position + 2]
+    
+    characters.insert(position - 1, result)
     
 
 def get_value(variable: str, var: dict) -> int | float:

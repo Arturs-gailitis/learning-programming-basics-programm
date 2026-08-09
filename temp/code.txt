@@ -181,3 +181,6 @@ kamer ka lielaks -10 tad
         ka = ka - 1
     beigas
 beigas
+
+mainigais mod = x atlikums skaits
+mainigais mod1 = cikls atlikums 2
