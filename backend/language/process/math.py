@@ -234,7 +234,7 @@ def get_value(variable: str, var: dict) -> int | float:
     except ValueError:
         return float(variable)
 
-def concatination(firstPart: list, action: list[str], var: dict):
+def concatination(firstPart: list, action: list[str], var: dict) -> None:
 
     """
     savieno string vērtības vienā vērtībā, jeb notiek string concatination
@@ -264,3 +264,84 @@ def concatination(firstPart: list, action: list[str], var: dict):
     else:
 
         var[firstPart[1]] = result
+
+def mathForFunctions(arguments: list[str], index: int, var: dict) -> str :
+
+    """
+    izpilda funkcijas parametriem matemātiskas operācijas 
+    """
+
+    mathOrder = []
+        
+    depth = 0
+    priority = 0
+
+    neededArg = arguments[index]
+    characters = neededArg.split()
+
+    for position, c in enumerate(characters):
+    
+        if c == "(":
+            depth = depth + 1
+            continue
+    
+        if c == ")":
+            depth = depth - 1
+            continue
+    
+        if c == "*" or c == "/" or c == "atlikums":
+            priority = 1
+    
+            mathOrder.append([depth, priority, position, c])
+            continue
+    
+        if c == "+" or c == "-":
+            priority = 0
+    
+            mathOrder.append([depth, priority, position, c])
+            continue
+    
+    mathOrder.sort(key=lambda item: (-item[0], -item[1], item[2]))
+
+    for depth, priority, position, operation in mathOrder:
+    
+        first_variable = characters[position - 1]
+        second_variable = characters[position + 1]
+    
+        match operation:
+            case "*":
+                multiplication(first_variable, second_variable, var, position, characters)
+            case "/":
+                division(first_variable, second_variable, var, position, characters)
+            case "atlikums":
+                modulo(first_variable, second_variable, var, position, characters)
+            case "+":
+                addition(first_variable, second_variable, var, position, characters)
+            case "-":
+                subtraction(first_variable, second_variable, var, position, characters)
+    
+        brackets_removed = False
+    
+        if position - 2 >= 0 and position < len(characters):
+    
+            if characters[position - 2] == "(" and characters[position] == ")":
+    
+                del characters[position]
+                del characters[position - 2]
+    
+                brackets_removed = True
+    
+        for index in range(len(mathOrder)):
+    
+            nextDepth, nextPriority, nextPosition, nextOperation = mathOrder[index]
+    
+            if nextPosition > position:
+    
+                if brackets_removed == True:
+                    mathOrder[index] = (nextDepth, nextPriority, nextPosition - 4, nextOperation)
+                else:
+                    mathOrder[index] = (nextDepth, nextPriority, nextPosition - 2, nextOperation)
+
+    if len(characters) == 1:
+
+        return characters[0]

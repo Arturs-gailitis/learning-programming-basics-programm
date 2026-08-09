@@ -182,5 +182,35 @@ kamer ka lielaks -10 tad
     beigas
 beigas
 
+mainigais funkcijasTeksts = ""
+
+funkcija test(arg1, arg2):
+
+    mainigais rezultāts = arg1 + arg2
+
+    ja rezultāts atlikums 2 vienads 0 tad
+        funkcijasTeksts = "pāra skaitlis"
+    citadi
+        funkcijasTeksts = "nepāra skaitlis"
+    beigas
+funkcijas beigas
+
+atgriezta funkcija reizinašana(pirmais, otrais, daudzums):
+
+    mainigais resultāts1 = 0
+    
+    cikls i no 1 lidz daudzums:
+        resultāts1 = resultāts1 + (pirmais * otrais)
+    beigas
+
+    atgriezt resultāts1
+funkcijas beigas
+
 mainigais mod = x atlikums skaits
 mainigais mod1 = cikls atlikums 2
+
+test(skaits, 3)
+mainigais reiz = reizinašana(skaits, summa, 3)
+
+mainigais reiz1 = 0
+reiz1 = reizinašana(2, skaits, 10)

@@ -1,10 +1,12 @@
 from shlex import split
 from re import findall
+from typing import Any
 
 from process.variables import variables
 from process.math import math
 from process.comparison import compare
 from process.ifBlock import checkOperations, checkBlockStatuss, ifElseBlock, closeNotFinishedIfBlocks, getIfBlockInformation, removeLocalVariables
+from process.createdFunctions import createFunction, startingFunction
 from process.forCycle import *
 from process.whileCycle import *
 
@@ -13,8 +15,9 @@ MATH_OPERATORS = ["*", "/", "+", "-", "atlikums"]
 COMPARISON_OPERATORS = ["un", "vai", "vienads", "nevienads", "lielaks", "mazaks", "vismaz", "neparsniedz"]
 
 variable = {}
+functions = []
 
-def readCode(codeLines: list[str], cycleTime = 0, cycleStart = 0, cycleEnd = 0, whileLoop = False) -> None | str:
+def readCode(codeLines: list[str], cycleTime = 0, cycleStart = 0, cycleEnd = 0, special = False) -> None | str | tuple [str, Any]:
 
     """
     apstrādā latviskotā pseudokoda rindas
@@ -26,11 +29,11 @@ def readCode(codeLines: list[str], cycleTime = 0, cycleStart = 0, cycleEnd = 0, 
     index, endIndex = 0, 0
 
     # iegūst beidzamo indeksu skatoties vai to palaiž vienkārši visu kodu vai arī kā ciklu
-    if cycleTime == 0 and whileLoop == False:
+    if cycleTime == 0 and special == False:
 
         endIndex = len(codeLines)
 
-    elif cycleTime > 0 or whileLoop == True :
+    elif cycleTime > 0 or special == True :
         index = cycleStart
         endIndex = cycleEnd
 
@@ -119,7 +122,7 @@ def readCode(codeLines: list[str], cycleTime = 0, cycleStart = 0, cycleEnd = 0, 
                     break
 
                 # iterē cauri kamer cikla bloku
-                keyword = readCode(codeLines, cycleStart=startLoopIndex + 1, cycleEnd=endLoopIndex, whileLoop=True)
+                keyword = readCode(codeLines, cycleStart=startLoopIndex + 1, cycleEnd=endLoopIndex, special=True)
                 
                 if keyword == "nakamais":
                     continue
@@ -131,14 +134,83 @@ def readCode(codeLines: list[str], cycleTime = 0, cycleStart = 0, cycleEnd = 0, 
             index = endLoopIndex + 1
             continue
 
-        # ja ciklā ir atrodami nakamais vai beidz atslēgvārdi, tad aizver ciet visus atvērtos ja zarus 
-        if cycleTime > 0 or whileLoop == True:
+        functionName = ""
+
+        if "(" in line:
+        
+            for obj in lineObjects:
+
+                # izņem no funkciju nosaukuma iekavu
+                object = obj.split("(")[0]
+
+                # pārbauda vai iepriekš tika izveidota funkcija ar tādu nosaukumu
+                if any(object == name["functionName"] for name in functions):
+                    functionName = object
+                    break
+
+        # ja atrada funkcijas nosaukumu
+        if functionName != "":
+
+            functionSavedVariables = list(variable.keys())
+
+            # iegūst nepieciešamo info par funkciju, piemēram sākuma un beigu indeksu un 
+            # vai šī funkcija atgriezīs vērtību
+            start, end, functionReturn = startingFunction(functionName, functions, line, MATH_OPERATORS, variable)
+
+            keyword, result = None, None
+
+            if functionReturn == True:
+                keyword, result = readCode(codeLines, cycleStart=start, cycleEnd=end, special=True)
+            else:
+                readCode(codeLines, cycleStart=start, cycleEnd=end, special=True)
+
+            removeLocalVariables(variable, functionSavedVariables)
+
+            # pārbauda vai bija atgriezt atslēgvārds un rezultāts
+            if keyword == "atgriezt" and result != None:
+
+                if "=" in lineObjects:
+
+                    # ieliek jaunajam vai vecajam mainīgajam vērtību kuru funkcija atgrieza 
+                    if lineObjects[0] == "mainigais":
+                        variable[lineObjects[1]] = result
+                    else:
+                        variable[lineObjects[0]] = result
+
+            index = index + 1
+            continue
+
+        # ja blokā ir atrodami nakamais, beidz un atgriezt atslēgvārdi, tad aizver ciet visus atvērtos ja zarus 
+        if cycleTime > 0 or special == True:
             if lineObjects[0] == "nakamais":
                 closeNotFinishedIfBlocks(openedIfBlocks, variable)
                 return "nakamais"
             elif lineObjects[0] == "beidz":
                 closeNotFinishedIfBlocks(openedIfBlocks, variable)
-                return "beidz" 
+                return "beidz"
+            elif lineObjects[0] == "atgriezt":
+                closeNotFinishedIfBlocks(openedIfBlocks, variable)
+
+                # atgriež tikai atslēgvārdu, ja funkcija neko neatgriež atpakaļ
+                if len(lineObjects) == 1:
+                    return "atgriezt", None
+
+                returnValue = lineObjects[1]
+
+                # atgriež atslēgvārdu un pareizu vērtību, ja funkcija atgriež atpakaļ vērtību
+                if returnValue in variable:
+                    return "atgriezt", variable[returnValue]
+                elif returnValue == "patiess":
+                    return "atgriezt", True
+                elif returnValue == "nepatiess":
+                    return "atgriezt", False
+                elif returnValue.startswith('"'):
+                    return "atgriezt", str(returnValue)
+
+                try:
+                    return "atgriezt", int(returnValue)
+                except ValueError:
+                    return "atgriezt", float(returnValue)
     
         hasMathSimbols, hasComparisonSimbols = checkOperations(lineObjects, MATH_OPERATORS, COMPARISON_OPERATORS)
             
@@ -171,6 +243,11 @@ def readCode(codeLines: list[str], cycleTime = 0, cycleStart = 0, cycleEnd = 0, 
             variables(line, variable)
             index = index + 1
             continue
+        elif first_word == "funkcija" or (first_word == "atgriezta" and lineObjects[1] == "funkcija"):
+            # izveido jaunas funkcijas ierakstu
+            functionEnd = createFunction(functions, line, codeLines, index)
+            index = functionEnd + 1
+            continue
 
 def readFile() -> None:
 
@@ -189,3 +266,5 @@ def readFile() -> None:
 readFile()
 
 print(variable)
+print("")
+print(functions)
