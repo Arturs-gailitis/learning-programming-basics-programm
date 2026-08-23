@@ -1,3 +1,5 @@
+from process.variables import getListElement, isListElement
+
 def math(line: str, var: dict, returnLine = False) -> None | str:
 
     """
@@ -225,6 +227,10 @@ def get_value(variable: str, var: dict) -> int | float:
     # iegūst saglabāto mainīgā vērtību
     if variable in var:
         return var[variable]
+
+    # iegūst saglabātā masīva elementu
+    if isListElement(variable, var):
+        return getListElement(variable, var)
 
     # skatās vai nevar pārveidot no teksta uz veselu ciparu vai daļskaitli
     try:

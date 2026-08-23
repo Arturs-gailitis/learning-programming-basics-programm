@@ -21,6 +21,8 @@ def variables(line: str, var: dict):
             var[name] = int(value)
         elif isFloat(value):
             var[name] = float(value)
+        elif isList(line.split("=", 1)[1].strip()):
+            var[name] = createList(line, var)
         elif isString(line):
             text_List = line.split("=", 1)
             text = ""
@@ -39,7 +41,12 @@ def variables(line: str, var: dict):
                 var[name] = True
             else:
                 var[name] = False
-        
+
+        # pārbauda vai jaunā mainīgā vērtība tiek ņemta no masīva
+        elif isListElement(value, var):
+            var[name] = getListElement(value, var)
+
+        # pārbauda vai jaunā mainīgā vērtība nav cits mainīgais
         elif isVariable(value, var):
             variableValue = getVariable(value, var)
             var[name] = variableValue
@@ -56,8 +63,18 @@ def variables(line: str, var: dict):
             if name == v:
                 oldValue = var[name]
                 break
+
+        # skatās vai tam kuram ieliks jauno vērtību, nav eksistējošs masīvs
+        if isListElement(name, var):
+            setListElement(name, newValue, var)
+            return
+
+        # skatās vai jaunā vērtība nebūs nākusi no eksistējoša masīva
+        if isListElement(newValue, var):
+            var[name] = getListElement(newValue, var)
+            return
         
-        # skatās vai jaunais mainīgasi ir jau eksistējošā mainīgā nosaukums
+        # skatās vai jaunais mainīgais ir jau eksistējošā mainīgā nosaukums
         if isVariable(newValue, var):
             variableValue = getVariable(newValue, var)
             var[name] = variableValue
@@ -147,6 +164,17 @@ def isBool(variable: str) -> bool:
         return True
     else:
         return False
+
+def isList(variable: str) -> bool:
+
+    """
+    pārbauda vai mainīgais ir masīvs
+    """
+
+    if variable.startswith("[") and variable.endswith("]"):
+        return True
+    else:
+        return False
     
 def isVariable(variable: str, var: dict) -> bool:
 
@@ -161,7 +189,24 @@ def isVariable(variable: str, var: dict) -> bool:
             return True
     
     return False
-    
+
+def isListElement(variable: str, var: dict) -> bool:
+
+    """
+    pārbauda vai teksts norāda uz eksistējoša masīva elementu
+    """
+
+    if "[" not in variable and "]" not in variable:
+        return False
+
+    name = variable.split("[")[0]
+
+    if name in var and isinstance(var[name], list):
+        return True
+    else:
+        return False
+
+       
 def getVariable(variable: str, var: dict) -> Any:
 
     """
@@ -169,3 +214,131 @@ def getVariable(variable: str, var: dict) -> Any:
     """
 
     return var[variable]
+
+def createList(line: str, var: dict) -> list:
+
+    """
+    izveido jauno masīvu un ieliek tajā norādītās vērtības priekš šī masīva nodefinēšanas variables dictionary
+    """
+
+    listSection = line.split("=", 1)[1].strip()
+
+    # atgriež tukšu masīvu, ja tajā nav nodefinētas vērtības
+    if listSection == "[]":
+        return []
+
+    # dabū katru vērtību izlaižot cietās iekavas - []
+    listElements = listSection[1:-1].split(",")
+
+    results = []
+
+    # iterē cauri katra masīva elementiem lai tos ieliktu jaunajā masīvā
+    for elem in listElements:
+
+        elem = elem.strip()
+
+        if isListElement(elem, var):
+        
+            results.append(getListElement(elem, var))
+
+        elif isVariable(elem, var):
+
+            results.append(getVariable(elem, var))
+
+        elif isBool(elem):
+
+            if elem == "patiess":
+                results.append(True)
+            else:
+                results.append(False)
+
+        elif isString(elem):
+
+            results.append(elem.strip('"'))
+
+        elif isInt(elem):
+
+            results.append(int(elem))
+
+        elif isFloat(elem):
+
+            results.append(float(elem))
+
+    return results
+
+def getListElement(variable: str, var: dict) -> Any:
+
+    """
+    paņem no iepriekš nodefinētā masīva konkrētu elementu, pēc tās indeksa
+    """
+
+    indexInText = ""
+    index = 0
+
+    listName = variable.split("[")[0]
+
+    # iegūst iterēšanas sākuma un beigu robežas, lai atrastu indeksu
+    findStartIndex = variable.find("[") + 1
+    findEndIndex = variable.rfind("]")
+
+    # iterē tik tālu lai varētu iegūt vajadzīgo indeksu
+    for i in range(findStartIndex, findEndIndex):
+        indexInText = indexInText + variable[i]
+
+    # iegūst indeksa vērtību kā ciparu vai arī ņemot jau eksistējošu mainīgo
+    try:
+        index = int(indexInText)
+    except ValueError:
+        index = getVariable(indexInText, var)
+
+    elements = getVariable(listName, var)
+
+    return elements[index]
+
+def setListElement(variable: str, value: str, var: dict) -> None:
+
+    """
+    ieliek iepriekš nodefinētajā masīvā konkrētā pozīcijā jaunu vērtību 
+    """
+
+    indexInText = ""
+    index = 0
+
+    listName = variable.split("[")[0]
+    existingList = getVariable(listName, var)
+
+    findStartIndex = variable.find("[") + 1
+    findEndIndex = variable.rfind("]")
+    
+    for i in range(findStartIndex, findEndIndex):
+        indexInText = indexInText + variable[i]
+    
+    try:
+        index = int(indexInText)
+    except ValueError:
+        index = getVariable(indexInText, var)
+
+    if isListElement(value, var):
+
+        existingList[index] = getListElement(value, var)
+
+    elif isVariable(value, var):
+
+        existingList[index] = getVariable(value, var)
+
+    elif isBool(value):
+
+        if value == "patiess":
+            existingList[index] = True
+        else:
+            existingList[index] = False
+
+    elif isString(value):
+        existingList[index] = value.strip('"')
+
+    elif isInt(value):
+        existingList[index] = int(value)
+
+    elif isFloat(value):
+        existingList[index] = float(value)
+    

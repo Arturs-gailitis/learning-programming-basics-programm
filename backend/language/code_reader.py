@@ -2,7 +2,7 @@ from shlex import split
 from re import findall
 from typing import Any
 
-from process.variables import variables
+from process.variables import variables, isListElement
 from process.math import math
 from process.comparison import compare
 from process.ifBlock import checkOperations, checkBlockStatuss, ifElseBlock, closeNotFinishedIfBlocks, getIfBlockInformation, removeLocalVariables
@@ -239,7 +239,7 @@ def readCode(codeLines: list[str], cycleTime = 0, cycleStart = 0, cycleEnd = 0, 
         # iegūst pirmo atslēgvārdu, ko analizēt
         first_word = lineObjects[0]
             
-        if first_word == "mainigais" or first_word in variable:
+        if first_word == "mainigais" or first_word in variable or isListElement(first_word, variable):
             variables(line, variable)
             index = index + 1
             continue

@@ -1,6 +1,8 @@
 from shlex import split
 from typing import Any
 
+from process.variables import isListElement, getListElement
+
 def compare(line: str, var: dict, operators: list[str], loops = False) -> None | bool:
 
     """
@@ -214,6 +216,10 @@ def getBoolValue(value: Any, var: dict) -> bool | int | float:
     # iegūst vērtību no iepriekš izveidotajiem mainīgajiem
     if value in var:
         return var[value]
+
+    # iegūst saglabātā masīva elementu
+    if isListElement(value, var):
+        return getListElement(value, var)
 
     # pārveido kodā uzrakstīto true vai false
     if value == "patiess":

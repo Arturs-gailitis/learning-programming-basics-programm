@@ -214,3 +214,34 @@ mainigais reiz = reizinašana(skaits, summa, 3)
 
 mainigais reiz1 = 0
 reiz1 = reizinašana(2, skaits, 10)
+
+mainigais skaitli = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1000]
+mainigais vardi = ["viens", "divi", "trīs"]
+mainigais dati = [1, "teksts", patiess, 3.5]
+mainigais tukss = []
+
+mainigais viens = skaitli[0]
+mainigais desmit = skaitli[10]
+mainigais rezultats2 = skaitli[0] + skaitli[1]
+
+mainigais salidzinajums = skaitli[0] vienads skaitli[1]
+
+mainigais j1 = 0
+
+ja skaitli[0] nevienads skaitli[1] tad
+    j1 = 69
+beigas
+
+mainigais j2 = 0
+
+cikls index no 0 lidz 10:
+    j2 = j2 + skaitli[index]
+beigas
+
+mainigais skaitli1 = [1, 4, 3, 6, 5, 6]
+skaitli1[1] = 2
+
+mainigais u = 3
+mainigais cipars = 4
+skaitli1[u] = cipars
+skaitli1[4] = skaitli
