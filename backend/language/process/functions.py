@@ -1,6 +1,6 @@
 from process.variables import isVariable, getVariable, isListElement, getListElement, isBool, isString, isInt, isFloat
 
-from re import fullmatch
+from re import fullmatch, search
 from typing import Any
 
 def splitPrintParts(text: str) -> list[str]:
@@ -97,3 +97,24 @@ def changingBool(value: Any) -> str | int | float | list:
 
     else:
         return value
+
+def getListSize(line: str, var: dict) -> str:
+
+    """
+        iegūst izvēlētā masīva kopējo garumu un to aizvieto  
+    """
+
+    # iegūst no pseudokoda rindas masīva nosaukumu
+    match = search(r"izmers\(\s*(\w+)\s*\)", line)
+
+    if match is None:
+        return line
+
+    name = match.group(1)
+    list = getVariable(name, var)
+    size = str(len(list))
+
+    # nomaina koda rindas vietu, kur atradās izmers() funkcija ar izvēlētā masīva garuma skaitu
+    line = line.replace(match.group(0), size)
+
+    return line

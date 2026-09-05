@@ -277,3 +277,46 @@ funkcija printetTestaFunkcija(v):
 funkcijas beigas
 
 printetTestaFunkcija(teksts)
+
+mainigais skaitliIzmers = izmers(skaitli)
+mainigais vardiIzmers = izmers( vardi )
+mainigais tuksaMasivaIzmers = izmers(tukss)
+mainigais datiIzmers = izmers(dati)
+mainigais izmersArAprēķinu = izmers(skaitli) + 1
+
+printet(skaitliIzmers)
+printet(vardiIzmers)
+printet(tuksaMasivaIzmers)
+printet(datiIzmers)
+printet(izmers(skaitli))
+
+ja izmers(skaitli) vienads 11 tad
+    printet("Masiva izmers ir pareizs")
+beigas
+
+mainigais ciklaSumma = 0
+
+cikls index no 1 lidz izmers(skaitli):
+    ciklaSumma = ciklaSumma + index
+beigas
+
+printet(ciklaSumma)
+
+mainigais tuksaMasivaParbaude = 0
+
+kamer tuksaMasivaParbaude mazaks izmers(skaitli1) tad
+    tuksaMasivaParbaude = tuksaMasivaParbaude + 1
+beigas
+
+printet(tuksaMasivaParbaude)
+
+ja skaits vienads 3 tad
+    printet(izmers(skaitli))
+beigas
+
+funkcija printetIzmeru(masivs):
+
+    printet("Skaitļi1 izmērs: " + izmers(masivs))
+funkcijas beigas
+
+printetIzmeru(skaitli1)

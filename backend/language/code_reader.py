@@ -7,7 +7,7 @@ from process.math import math
 from process.comparison import compare
 from process.ifBlock import checkOperations, checkBlockStatuss, ifElseBlock, closeNotFinishedIfBlocks, getIfBlockInformation, removeLocalVariables
 from process.createdFunctions import createFunction, startingFunction
-from process.functions import printing
+from process.functions import printing, getListSize
 from process.forCycle import *
 from process.whileCycle import *
 
@@ -50,6 +50,9 @@ def readCode(codeLines: list[str], cycleTime = 0, cycleStart = 0, cycleEnd = 0, 
             continue
         else:
             line = line.strip()
+
+        # aiztāj koda rindā vietā kur izmanto iebūvēto masīva izmēra funkciju ar izvēlētā masīva izmēru
+        line = getListSize(line, variable)
 
         # skatās vai ir izmantota iebūvētā printēšanas funkcija
         if line.startswith("printet("):
