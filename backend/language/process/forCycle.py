@@ -17,6 +17,11 @@ def findCycleEnd(CodeLines: list[str], startIndex: int) -> int:
         if line == "":
             continue
 
+        # ja līnijā parādās iebūvētā printēšanas funkcija tad šo līniju pāriet garām
+        # tas tiek darīts lai nebūtu problēmas ar split metodi un printēšanas funkciju
+        if line.startswith("printet("):
+            continue
+
         lineObjects = split(line, posix=False)
         firstWord = lineObjects[0]
 

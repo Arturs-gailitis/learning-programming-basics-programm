@@ -245,3 +245,35 @@ mainigais u = 3
 mainigais cipars = 4
 skaitli1[u] = cipars
 skaitli1[4] = skaitli
+
+printet("Tests: parasts teksts")
+printet(teksts)
+printet(skaits)
+printet(dala)
+printet(patiess)
+printet(nepatiess)
+printet(skaitli[0])
+printet("Teksts ar plus zimi: 2 + 2")
+printet("Teksts: " + teksts)
+printet("Skaitli: " + skaits + ", " + dala)
+printet("Bool: " + patiess + ", " + nepatiess)
+printet("Masiva elements: " + skaitli[1])
+
+ja patiess tad
+    printet("Printēt ja bloka")
+beigas
+
+ja skaits vienads 5 tad
+    printet("Testa rezultāts")
+beigas
+
+cikls printetIndekss no 1 lidz 2:
+    printet("Printet cikla iteracija: " + printetIndekss)
+beigas
+
+funkcija printetTestaFunkcija(v):
+
+    printet("Printet lietotaja funkcija: " + v)
+funkcijas beigas
+
+printetTestaFunkcija(teksts)

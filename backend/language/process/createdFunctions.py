@@ -140,6 +140,11 @@ def findFunctionStartEndIndex(codeLines: list[str], index: int) -> tuple [int, i
         if line == "":
             continue
 
+        # ja līnijā parādās iebūvētā printēšanas funkcija tad šo līniju pāriet garām
+        # tas tiek darīts lai nebūtu problēmas ar split metodi un printēšanas funkciju
+        if line.startswith("printet("):
+            continue
+
         lineObjects = split(line, posix=False)
 
         if len(lineObjects) > 1 and lineObjects[0] == "funkcijas" and lineObjects[1] == "beigas":

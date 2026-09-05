@@ -7,6 +7,7 @@ from process.math import math
 from process.comparison import compare
 from process.ifBlock import checkOperations, checkBlockStatuss, ifElseBlock, closeNotFinishedIfBlocks, getIfBlockInformation, removeLocalVariables
 from process.createdFunctions import createFunction, startingFunction
+from process.functions import printing
 from process.forCycle import *
 from process.whileCycle import *
 
@@ -16,6 +17,7 @@ COMPARISON_OPERATORS = ["un", "vai", "vienads", "nevienads", "lielaks", "mazaks"
 
 variable = {}
 functions = []
+printedResult = []
 
 def readCode(codeLines: list[str], cycleTime = 0, cycleStart = 0, cycleEnd = 0, special = False) -> None | str | tuple [str, Any]:
 
@@ -49,11 +51,14 @@ def readCode(codeLines: list[str], cycleTime = 0, cycleStart = 0, cycleEnd = 0, 
         else:
             line = line.strip()
 
-        # sagriež rindu pa gabaliem
-        lineObjects = split(line, posix=False)
+        # skatās vai ir izmantota iebūvētā printēšanas funkcija
+        if line.startswith("printet("):
+            # tiek izveidots printēšanas teksts skatoties vai konkrētais kod bloks ir izmantojams
+            if checkBlockStatuss():
+                printing(line, variable, printedResult)
 
-        # sagriež beidzamo skaitli un kolu
-        regexFind = findall(r'\d+|:', lineObjects[-1])
+            index = index + 1
+            continue
 
         # skatās vai sākas ja, citādi ja, citādi vai beigas
         ifBlockLine = ifElseBlock(line, variable, MATH_OPERATORS, COMPARISON_OPERATORS)
@@ -69,6 +74,12 @@ def readCode(codeLines: list[str], cycleTime = 0, cycleStart = 0, cycleEnd = 0, 
         if ifBlockActive == False:
             index = index + 1
             continue
+
+        # sagriež rindu pa gabaliem
+        lineObjects = split(line, posix=False)
+
+        # sagriež beidzamo skaitli un kolu
+        regexFind = findall(r'\d+|:', lineObjects[-1])
 
         # skatās vai nesākās cikls 
         if lineObjects[0] == "cikls" and ":" in regexFind:
@@ -268,3 +279,5 @@ readFile()
 print(variable)
 print("")
 print(functions)
+print()
+print(printedResult)
