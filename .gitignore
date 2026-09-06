@@ -1,2 +1,4 @@
 # automātiski ģenerēts pycache
 backend/language/process/__pycache__
+backend/language/__pycache__
+backend/API/__pycache__

@@ -1,6 +1,7 @@
 from shlex import split
 from re import findall
 from typing import Any
+from pathlib import Path
 
 from process.variables import variables, isListElement
 from process.math import math
@@ -11,7 +12,6 @@ from process.functions import printing, getListSize, addElementInList, removeEle
 from process.forCycle import *
 from process.whileCycle import *
 
-FILE_PATH = "temp/code.txt"
 MATH_OPERATORS = ["*", "/", "+", "-", "atlikums"]
 COMPARISON_OPERATORS = ["un", "vai", "vienads", "nevienads", "lielaks", "mazaks", "vismaz", "neparsniedz"]
 
@@ -280,19 +280,49 @@ def readFile() -> None:
     """
     nolasa visas koda rindas un aizsūta tās apstrādei
     """
+
+    # iegūst code.txt faila ceļu
+    FILEPATH = getCodeFilePath()
+
+    # izdzēš mainīgo, funkciju un printējamā rezultāta informāciju, lai nebūtu problēmas atkārtori lasot code.txt
+    variable.clear()
+    functions.clear()
+    printedResult.clear()
         
     # atver latviskoto koda failu lasīšanas režīmā
-    with open(FILE_PATH, "r", encoding="utf-8") as file:
+    with open(FILEPATH, "r", encoding="utf-8") as file:
 
         # izlasa visas rindas
         lines = file.readlines()
 
         readCode(lines)
 
-readFile()
+def getPrintedResult() -> list:
 
-print(variable)
-print("")
-print(functions)
-print()
-print(printedResult)
+    """
+        var iegūt globālo printējamo rezultātu
+    """
+    return printedResult
+
+def getCodeFilePath() -> Path:
+
+    """
+        iegūst code.txt faila atrašanās ceļu
+    """
+    # no konkrētā code_reader.py faila iegūst absalūto ceļu pirms /backend
+    fileMap = Path(__file__).resolve().parent.parent.parent
+
+    # ieliek absalūtā ceļā temp/code.txt 
+    file = fileMap / "temp" / "code.txt"
+
+    return file
+
+# priekš testēšanas
+if __name__ == "__main__":
+    readFile()
+
+    print(variable)
+    print("")
+    print(functions)
+    print()
+    print(printedResult)
