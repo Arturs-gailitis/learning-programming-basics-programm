@@ -7,7 +7,7 @@ from process.math import math
 from process.comparison import compare
 from process.ifBlock import checkOperations, checkBlockStatuss, ifElseBlock, closeNotFinishedIfBlocks, getIfBlockInformation, removeLocalVariables
 from process.createdFunctions import createFunction, startingFunction
-from process.functions import printing, getListSize
+from process.functions import printing, getListSize, addElementInList, removeElementInList
 from process.forCycle import *
 from process.whileCycle import *
 
@@ -75,6 +75,18 @@ def readCode(codeLines: list[str], cycleTime = 0, cycleStart = 0, cycleEnd = 0, 
                     
         # nostrādā ja konkrētais bloks ir atzīmēts, ka to nelasa jo nosacījums neatbilst
         if ifBlockActive == False:
+            index = index + 1
+            continue
+
+        # skatās vai ir izmantota iebūvētā elementu ielikšana masīvā funkcija
+        if line.startswith("ielikt"):
+            addElementInList(line, variable)
+            index = index + 1
+            continue
+
+        # skatās vai ir izmantota iebūvētā pēdējo elementu noņemšana no masīva funkcija
+        if line.startswith("izmest"):
+            removeElementInList(line, variable)
             index = index + 1
             continue
 

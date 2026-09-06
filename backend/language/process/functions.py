@@ -3,10 +3,10 @@ from process.variables import isVariable, getVariable, isListElement, getListEle
 from re import fullmatch, search
 from typing import Any
 
-def splitPrintParts(text: str) -> list[str]:
+def splitParts(text: str, simbol: str) -> list[str]:
 
     """
-        sagriež printēšanai ievadīto tekstu 
+        sagriež funkcijas parametrus
     """
 
     splittingParts = []
@@ -23,10 +23,10 @@ def splitPrintParts(text: str) -> list[str]:
         elif char == quoteSimbol and quoteStatuss == True:
             quoteStatuss = False
 
-        # skatās vai + simbols nav saistīts ar sadalīšanu vai arī tas ir simbols priekš teksta
-        if char == "+" and quoteStatuss == True:
+        # skatās vai simbols nav saistīts ar sadalīšanu vai arī tas ir simbols priekš teksta
+        if char == simbol and quoteStatuss == True:
             part = part + char
-        elif char == "+" and quoteStatuss == False:
+        elif char == simbol and quoteStatuss == False:
             splittingParts.append(part.strip())
             part = ""
         else:
@@ -54,7 +54,7 @@ def printing(line: str, var: dict, printedResult: list) -> None:
     result = ""
 
     # sagriež tekstu daļās skatoties + zīmes lokāciju
-    textPieces = splitPrintParts(text)
+    textPieces = splitParts(text, "+")
 
     for piece in textPieces:
 
@@ -118,3 +118,58 @@ def getListSize(line: str, var: dict) -> str:
     line = line.replace(match.group(0), size)
 
     return line
+
+def addElementInList(line: str, var: dict) -> None:
+
+    """
+        ieliek jaunu elementu masīva beigās 
+    """
+
+    # pārbauda vai rinda pinībā atbilst ielikt() funkcijai
+    match = fullmatch(r"ielikt\s*\((.*)\)", line.strip())
+
+    if match == None:
+        return
+
+    text = match.group(1).strip()
+    variables = splitParts(text, ",")
+
+    # uzreiz nodefinē kā list mainīgo, lai ar pitona list funkcijām būtu okey
+    targetedList: list = getVariable(variables[0], var)
+    value = None
+
+    if isVariable(variables[1], var):
+        value = getVariable(variables[1], var)
+    elif isListElement(variables[1], var):
+        value = getListElement(variables[1], var)
+    elif isBool(variables[1]):
+
+        if variables[1] == "patiess":
+            value = True
+        else:
+            value = False
+
+    elif isString(variables[1]):
+        value = variables[1].strip('"\'')
+    elif isInt(variables[1]):
+        value = int(variables[1])
+    elif isFloat(variables[1]):
+        value = float(variables[1])
+
+    targetedList.append(value)
+
+def removeElementInList(line: str, var: dict) -> None:
+
+    """
+        izmet pēdējo elementu no masīva  
+    """
+
+    # pārbauda vai rinda pinībā atbilst izmest() funkcijai
+    match = fullmatch(r"izmest\s*\((.*)\)", line.strip())
+
+    if match == None:
+        return
+
+    variable: list = getVariable(match.group(1).strip(), var)
+
+    variable.pop()

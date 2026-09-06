@@ -320,3 +320,74 @@ funkcija printetIzmeru(masivs):
 funkcijas beigas
 
 printetIzmeru(skaitli1)
+
+
+mainigais testsSaraksts = []
+mainigais testsSkaitlis = 42
+mainigais testsOtrsSaraksts = [7, 8, 9]
+
+ielikt(testsSaraksts, 10)
+ielikt(testsSaraksts, 2.5)
+ielikt(testsSaraksts, "teksts")
+ielikt(testsSaraksts, patiess)
+ielikt(testsSaraksts, testsSkaitlis)
+ielikt(testsSaraksts, testsOtrsSaraksts[1])
+
+printet(testsSaraksts)
+
+izmest(testsSaraksts)
+printet(testsSaraksts)
+
+
+mainigais ifSaraksts = []
+
+ja patiess tad
+    ielikt(ifSaraksts, "if bloks")
+    ielikt(ifSaraksts, "if noņemams")
+    printet(ifSaraksts)
+    izmest(ifSaraksts)
+beigas
+
+mainigais ifFalseSaraksts = []
+
+ja skaits mazaks 4 tad
+    ielikt(ifFalseSaraksts, "tests1")
+    ielikt(ifFalseSaraksts, "tests2")
+    izmest(ifFalseSaraksts)
+beigas
+
+printet(ifSaraksts)
+
+mainigais forSaraksts = []
+
+cikls forIndekss no 1 lidz 3:
+    ielikt(forSaraksts, forIndekss)
+    ielikt(forSaraksts, forIndekss)
+    izmest(forSaraksts)
+beigas
+
+printet(forSaraksts)
+
+mainigais whileSaraksts = []
+mainigais whileIndekss = 0
+
+kamer whileIndekss mazaks 3 tad
+    ielikt(whileSaraksts, whileIndekss)
+    ielikt(whileSaraksts, whileIndekss)
+    izmest(whileSaraksts)
+    whileIndekss = whileIndekss + 1
+beigas
+
+printet(whileSaraksts)
+
+funkcija pievienotSarakstam(saraksts, vertiba):
+
+    ielikt(saraksts, vertiba)
+    ielikt(saraksts, "funkcijas noņemams")
+    izmest(saraksts)
+
+funkcijas beigas
+
+mainigais funkcijasSaraksts = []
+pievienotSarakstam(funkcijasSaraksts, "funkcijas bloks")
+printet(funkcijasSaraksts)
