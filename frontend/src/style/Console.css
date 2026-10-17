@@ -1,0 +1,30 @@
+/* atbild par pašu konsoles komponenti */
+.Console {
+    display: flex;
+    width: 80%;
+    min-height: 25vh;
+    align-items: center;
+    justify-content: center;
+    justify-self: center;
+    box-sizing: border-box;
+    margin-top: 10px;
+    border: 1px solid black;
+}
+
+/* atbild par konsoles teksta laukumu */
+.TextArea {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding: 10px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: black;
+    line-height: 16px;
+}
+
+/* atbild par konsoles tekstu */
+.consoleText {
+    display: block;
+    text-align: left;
+    padding: 5px;
+}

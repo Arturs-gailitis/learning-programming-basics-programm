@@ -275,14 +275,18 @@ def readCode(codeLines: list[str], cycleTime = 0, cycleStart = 0, cycleEnd = 0, 
             index = functionEnd + 1
             continue
 
-def readFile() -> None:
+def readFile(testfile = False) -> None:
 
     """
     nolasa visas koda rindas un aizsūta tās apstrādei
     """
+    filepath = ''
 
-    # iegūst code.txt faila ceļu
-    FILEPATH = getCodeFilePath()
+    # izvēlās kādu txt failu izmantos
+    if testfile == True:
+        filepath = getCodeFilePath("code.txt")
+    else:
+        filepath = getCodeFilePath("realCode.txt")
 
     # izdzēš mainīgo, funkciju un printējamā rezultāta informāciju, lai nebūtu problēmas atkārtori lasot code.txt
     variable.clear()
@@ -290,7 +294,7 @@ def readFile() -> None:
     printedResult.clear()
         
     # atver latviskoto koda failu lasīšanas režīmā
-    with open(FILEPATH, "r", encoding="utf-8") as file:
+    with open(filepath, "r", encoding="utf-8") as file:
 
         # izlasa visas rindas
         lines = file.readlines()
@@ -304,22 +308,22 @@ def getPrintedResult() -> list:
     """
     return printedResult
 
-def getCodeFilePath() -> Path:
+def getCodeFilePath(fileName: str) -> Path:
 
     """
-        iegūst code.txt faila atrašanās ceļu
+        iegūst teksta faila atrašanās ceļu
     """
     # no konkrētā code_reader.py faila iegūst absalūto ceļu pirms /backend
     fileMap = Path(__file__).resolve().parent.parent.parent
 
-    # ieliek absalūtā ceļā temp/code.txt 
-    file = fileMap / "temp" / "code.txt"
+    # ieliek absalūtā ceļā temp/.txt 
+    file = fileMap / "temp" / fileName
 
     return file
 
 # priekš testēšanas
 if __name__ == "__main__":
-    readFile()
+    readFile(True)
 
     print(variable)
     print("")

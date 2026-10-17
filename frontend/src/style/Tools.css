@@ -1,0 +1,32 @@
+/* atbild par redektora palīgpogu komponenti */
+.Tools {
+    width: 100vw;
+    min-width: 50%;
+    box-sizing: border-box;
+    border-bottom: 1px solid black;
+    background-color: white;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* atbild par redektora palīgpogu laukumu */
+.ToolList {
+    display: flex;
+    flex-direction: row;
+    align-items: left;
+    gap: 20px;
+    width: 100%;
+}
+
+/* atbild par katru palīgpogu */
+.ToolButtons {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-color: transparent;
+    cursor: pointer;
+}

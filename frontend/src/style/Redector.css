@@ -1,0 +1,68 @@
+/* atbild par pašu redektora komponenti */
+.redector {
+  display: flex;
+  width: 100vw;
+  min-height: 60vh;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* atbild par kopējo tekta laukumu */
+.textRedector {
+  display: flex;
+  width: 75vw;
+  height: 50vh;
+  box-sizing: border-box;
+  border: 1px, solid, lightgrey;
+  border-radius: 4px;
+  background-color: white;
+  color: black;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+/* atbild par līnijas nummerāciju */
+.lineNummeration {
+  width: 10px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 48px;
+  padding-bottom: 16px;
+  padding-top: 16px;
+  padding-left: 8px;
+  padding-right: 8px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  border-right: 1px, solid, lightgray;
+  background-color: white;
+  color: grey;
+  text-align: center;
+  line-height: 24px;
+}
+
+/* atbild lai nākošā līnijas nummurs sāktos jaunā rindā */
+#lineNumber {
+  display: block;
+  height: 24px;
+}
+
+/* atbild par teksta sadaļu pašā teksta laukumā */
+.redectorTextArea {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0%;
+  resize: none;
+  padding-bottom: 16px;
+  padding-top: 16px;
+  padding-left: 16px;
+  padding-right: 16px;
+  line-height: 24px;
+}
+
+/* atbild lai izvēloties teksta laukumu, to malas netiktu iekrāsotas citā krāsā  */
+.redectorTextArea:focus {
+  outline: 0;
+}

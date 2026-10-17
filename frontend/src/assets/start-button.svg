@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" role="img" aria-labelledby="title desc">
+  <title id="title">Black play triangle</title>
+  <desc id="desc">A simple black triangle.</desc>
+  <path d="M72 42 174 110 72 178Z" fill="#000" />
+</svg>
