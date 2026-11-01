@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title desc">
+  <title id="title">Saglabāt failu</title>
+  <desc id="desc">Disketes ikona faila saglabāšanai.</desc>
+  <path d="M5 3h11.2L21 7.8V21H3V5a2 2 0 0 1 2-2Zm0 2v14h14V8.6L15.4 5H14v5H6V5H5Zm3 0v3h4V5H8Zm0 9h8v2H8v-2Zm0 3h8v2H8v-2Z" fill="#000"/>
+</svg>

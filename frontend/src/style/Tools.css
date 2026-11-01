@@ -30,3 +30,8 @@
     border-color: transparent;
     cursor: pointer;
 }
+
+/* atbild par faila input sadaļu */
+.fileInput {
+    display: none;
+}

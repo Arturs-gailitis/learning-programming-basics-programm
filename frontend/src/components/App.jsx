@@ -10,7 +10,7 @@ function MainApp() {
 
   return (
     <main>
-      <Tools text={text} setCodeResult={setCodeResult} />
+      <Tools text={text} setText={setText} setCodeResult={setCodeResult} />
       <Redector text={text} setText={setText} />
       <Console codeResult={codeResult} />
     </main>
