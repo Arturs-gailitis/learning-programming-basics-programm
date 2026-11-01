@@ -1,0 +1,7 @@
+/* atbild par redektoru un mainīgo info */
+#redectorLayout {
+  display: flex;
+  width: 100vw;
+  box-sizing: border-box;
+  margin-top: 35px;
+}

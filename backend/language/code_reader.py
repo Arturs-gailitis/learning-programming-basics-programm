@@ -321,6 +321,30 @@ def getCodeFilePath(fileName: str) -> Path:
 
     return file
 
+
+def createVariableInfo() -> dict[str, list[Any]]:
+
+    variableInfo = {}
+
+    for key, value in variable.items():
+
+        dataType = " "
+
+        if isinstance(value, bool):
+            dataType = "loģiskais"
+        elif isinstance(value, int):
+            dataType = "vesels skaitlis"
+        elif isinstance(value, float):
+            dataType = "daļskaitlis"
+        elif isinstance(value, str):
+            dataType = "teksts"
+        elif isinstance(value, list):
+            dataType = "saraksts"
+
+        variableInfo[key] = [value, dataType]
+
+    return variableInfo
+
 # priekš testēšanas
 if __name__ == "__main__":
     readFile(True)
@@ -330,3 +354,5 @@ if __name__ == "__main__":
     print(functions)
     print()
     print(printedResult)
+    print()
+    print(createVariableInfo())

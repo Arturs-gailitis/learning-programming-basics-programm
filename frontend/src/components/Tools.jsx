@@ -9,20 +9,23 @@ import { postCode } from '../API/apiConnection'
 
 import '../style/Tools.css'
 
-function Tools({ text, setText, setCodeResult}) {
+function Tools({ text, setText, setCodeResult, setCodeData}) {
 
     const fileInput = useRef(null)
 
     // nospiežot Start pogu aizsūta kodu un saņem tā rezultātu
     async function runCode() {
         let APIResult = await postCode(text)
+        
         setCodeResult(APIResult.result)
+        setCodeData(APIResult.data)
     }
 
     // nospiežot tiek izdzēsts koda teksts un rezultāts
     function clearText() {
         setText('')
-        setCodeResult([])
+        setCodeResult([''])
+        setCodeData({})
     }
 
     // iegūst kodu no .txt faila

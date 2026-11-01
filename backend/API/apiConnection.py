@@ -1,9 +1,10 @@
-from language.code_reader import readFile, getPrintedResult
+from language.code_reader import readFile, getPrintedResult, createVariableInfo
 from language.codeWritter import writeCode, deleteCode
 
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
+from typing import Any
 
 # klase kas nosaka kādu atbildi ir jāsaņem no frontend
 class RequestedCode(BaseModel):
@@ -24,7 +25,7 @@ def main() -> FastAPI:
 
     # saņem no frontend parastā redaktora kodu un aizsūta atpakaļ pseudokoda printējamo rezultātu
     @mainAPI.post("/code")
-    def gettingSimpleCode(request: RequestedCode) -> dict[str, list]:
+    def gettingSimpleCode(request: RequestedCode) -> dict[str, Any]:
 
         """
             izpilda, kad frontend veic post HTTP vaicājumu no /code adresses
@@ -38,10 +39,13 @@ def main() -> FastAPI:
 
         result = getPrintedResult()
 
+        variableInfo = createVariableInfo()
+
         deleteCode()
 
         return {
-            "result": result
+            "result": result,
+            "data": variableInfo
         }
 
     return mainAPI

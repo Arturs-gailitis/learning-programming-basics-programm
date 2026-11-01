@@ -1,0 +1,49 @@
+/* atbild par datu info komponenti */
+.DataInfo {
+    width: 25vw;
+    height: 50vh;
+    margin-right: 20px;
+    box-sizing: border-box;
+    border: 2px solid #c3cad3;
+    border-radius: 10px;
+    overflow-y: auto;
+    overflow-x: auto;
+    color: black;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 14px;
+}
+
+/* atbild par datu info kopējo tabulu */
+.DataInfo table {
+    width: 100%;
+    min-width: 500px;
+}
+
+/* atbild par par datu info tabulas virstraktu un to ierakstiem */
+.DataInfo th, .DataInfo td {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 16px;
+    border-bottom: 1px solid #d6dce3;
+    border-right: 1px solid #d6dce3;
+    text-align: left;
+}
+
+/* atbild tikai par tabulu virsrakstu */
+.DataInfo th {
+    color: #828487;
+    font-weight: normal;
+    background-color: #fff;
+}
+
+/* atbild tikai par datu info tabulas ierakstiem */
+.DataInfo td {
+    padding-right: 16px;
+    word-break: break-word;
+}
+
+/* atbild par visu tabulu kolonnu sadaļu */
+.DataInfo thead {
+    position: sticky;
+    top: 0;
+}
