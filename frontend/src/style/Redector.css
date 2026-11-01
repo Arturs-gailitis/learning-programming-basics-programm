@@ -2,7 +2,10 @@
 .redector {
   display: flex;
   width: 100vw;
-  min-height: 60vh;
+  padding-top: 32px;
+  padding-bottom: 24px;
+  padding-left: 20px;
+  padding-right: 20px;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
@@ -14,18 +17,18 @@
   width: 75vw;
   height: 50vh;
   box-sizing: border-box;
-  border: 1px, solid, lightgrey;
-  border-radius: 4px;
-  background-color: white;
+  border: 2px solid #c3cad3;
+  border-radius: 10px;
   color: black;
   overflow-x: hidden;
   overflow-y: hidden;
   font-family: 'Times New Roman', Times, serif;
+  font-size: 14px;
 }
 
 /* atbild par līnijas nummerāciju */
 .lineNummeration {
-  width: 10px;
+  width: 48px;
   flex-grow: 0;
   flex-shrink: 0;
   flex-basis: 48px;
@@ -36,9 +39,8 @@
   box-sizing: border-box;
   overflow-x: hidden;
   overflow-y: hidden;
-  border-right: 1px, solid, lightgray;
-  background-color: white;
-  color: grey;
+  border-right: 2px solid #d6dce3;
+  color: #828487;
   text-align: center;
   line-height: 24px;
 }
@@ -59,6 +61,7 @@
   padding-top: 16px;
   padding-left: 16px;
   padding-right: 16px;
+  border-style: none;
   line-height: 24px;
 }
 

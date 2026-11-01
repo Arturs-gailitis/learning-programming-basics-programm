@@ -7,9 +7,9 @@ function Console({codeResult}) {
     // pārtaisa rezultātu no masīva uz string
     function fixResultFormat(result) {
 
-        let resultText = '';
+        let resultText = result[0];
 
-        for (let i = 0; i < resultLenght; i++) {
+        for (let i = 1; i < resultLenght; i++) {
             resultText = resultText + '\n' + result[i];
         }
 
@@ -19,7 +19,7 @@ function Console({codeResult}) {
     return (
         <main className='Console'>
             <div id='Header'>Konsole</div>
-            <textarea value={fixResultFormat(codeResult)} className='TextArea' readOnly></textarea>
+            <textarea value={fixResultFormat(codeResult)} className='TextArea' readOnly wrap='off'></textarea>
         </main>
     )
 }

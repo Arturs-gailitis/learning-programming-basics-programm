@@ -3,8 +3,7 @@
     width: 100vw;
     min-width: 50%;
     box-sizing: border-box;
-    border-bottom: 1px solid black;
-    background-color: white;
+    border-bottom: 2px solid #c3cad3;
     padding-top: 12px;
     padding-bottom: 12px;
     padding-left: 20px;
@@ -15,8 +14,7 @@
 .ToolList {
     display: flex;
     flex-direction: row;
-    align-items: left;
-    gap: 20px;
+    gap: 8px;
     width: 100%;
 }
 
@@ -25,10 +23,31 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 50px;
-    height: 50px;
-    border-color: transparent;
+    width: 42px;
+    height: 42px;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    padding-left: 9px;
+    padding-right: 9px;
+    border: 1px solid transparent;
+    border-radius: 8px;
     cursor: pointer;
+}
+
+/* atbild par palīgpogām, kad pelīte ir novietora virs tās */
+.ToolButtons:hover {
+    border-color: #565659;
+}
+
+/* atbild par palīgpogām, kad šīs pogas ir nospiestas */
+.ToolButtons:active {
+    background-color: #8C8C91;
+}
+
+/* atbild par palīgpogu bildēm */
+.ToolButtons img {
+    width: 22px;
+    height: 22px;
 }
 
 /* atbild par faila input sadaļu */
