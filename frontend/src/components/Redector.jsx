@@ -18,6 +18,30 @@ function Redector({ text, setText }) {
     return index + 1
   }
 
+  // funkcija ar kuru viedo indentāciju
+  function createIndentation(event) {
+
+    // ja nospieda Tab pogu
+    if (event.key == "Tab") {
+      
+      // atceļ pogas orģinālo darbību, kas nepalīdzēja veidot indentāciju
+      event.preventDefault()
+
+      // iegūst redektora objektu
+      const redector = event.currentTarget
+
+      // dabū tekstu pirms indentācijas un arī pēc tās
+      const startText = text.slice(0, redector.selectionStart)
+      const endText = text.slice(redector.selectionEnd)
+
+      // savieno kopā tos kur vidū būs indentācija
+      const newText = startText.concat("  ", endText)
+
+      setText(newText)
+
+    } 
+  }
+
   return (
     <main className="redector">
       <div className="textRedector">
@@ -26,8 +50,7 @@ function Redector({ text, setText }) {
             <span id='lineNumber' key={index}>{addLineCount(index)}</span>
           ))}
         </div>
-        <textarea className="redectorTextArea" value={text} onChange={(event) => setText(event.target.value)}
-          onScroll={handleScroll} wrap="off" spellCheck="false"
+          <textarea className="redectorTextArea" value={text} onChange={(event) => setText(event.target.value)} onScroll={handleScroll} onKeyDown={createIndentation} wrap="off" spellCheck="false"
         />
       </div>
     </main>
