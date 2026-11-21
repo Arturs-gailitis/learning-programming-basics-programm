@@ -1,0 +1,75 @@
+/* atbild par pamācības nodaļas laukumu */
+.Content {
+    width: 80%;
+    min-height: 75vh;
+    box-sizing: border-box;
+    margin-top: 35px;
+    margin-bottom: 24px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border: 2px solid lightgrey;
+    border-radius: 8px;
+}
+
+/* atbild par pamācības nodaļas visiem teorijas elementiem */
+.TutorialArticle {
+    max-width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5;
+}
+
+/* atbild par pamācības nodaļas galveno virsrakstu */
+h2 {
+    margin-bottom: 20px;
+    margin-top: -5px;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-bottom: 12px;
+    padding-left: 20px;
+    border-bottom: 2px solid lightgray;
+    color: gray;
+    font-size: 20px;
+    font-weight: normal;
+}
+
+/* atbild par pamācības nodaļas sadaļas virsrakstu */
+h3 {
+    margin-top: 24px;
+    margin-bottom: 8px;
+    color: #323233;
+    font-size: 20px;
+    font-weight: normal;
+}
+
+/* atbild par pamācības nodaļas parasto tekstu */
+p {
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+/* atbild par pamācības nodaļas koda piemēru laukuu */
+.codeTextArea {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 12px;
+    border: 1px solid grey;
+    border-radius: 6px;
+    white-space: pre;
+}
+
+/* atbild par pamācības nodaļas sarakstiem */
+ul, ol {
+    margin-top: 8px;
+}
+
+/* atbild par pamācības nodaļas nummur;etiem sarakstiem */
+ol {
+    margin-left: -22px;
+}

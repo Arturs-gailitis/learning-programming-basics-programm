@@ -41,7 +41,7 @@ function Tools({ text, setText, setCodeResult, setCodeData, setTutorialState}) {
 
             setText(code)
 
-        } catch (error) {
+        } catch {
             return
         }
     }

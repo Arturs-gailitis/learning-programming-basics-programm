@@ -1,4 +1,7 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
+
+import Variables from './tutorialSections/Variables.jsx'
+import Math from './tutorialSections/Math.jsx'
 
 import '../style/Tutorial.css'
 
@@ -7,8 +10,7 @@ function Tutorial({ setTutorialState }) {
     const [tutorialSection, setTutorialSection] = useState(0)
     const [tutorialName, setTutorialName] = useState('')
 
-    const buttonRef = useRef(null)
-
+    // pamācību nodaļas nosaukumi
     const titles = [
         'Mainīgie un printēšana',
         'Matemātiskās operācijas',
@@ -20,6 +22,7 @@ function Tutorial({ setTutorialState }) {
         'Darbošanās ar masīvu'
     ]
 
+    // funkcija, kas izveido pamācību saturā visas vajadzīgās pogas
     function createTutorialContentButtons() {
 
         const count = titles.length
@@ -38,6 +41,7 @@ function Tutorial({ setTutorialState }) {
         return contentaList
     }
 
+    // funkcija, kas nomaina virsrakstu un nodefinē pamācības sekcijas nummuru
     function changeTutorialSectionState(section) {
 
         switch (section) {
@@ -89,12 +93,16 @@ function Tutorial({ setTutorialState }) {
         }
     }
 
+    // funkcija ar kuru ieliek uz ekrāna atbilstošo nodaļu
     function showTutorialSection (sectionNumber) {
 
         switch (sectionNumber) {
 
             case (1):
-                break
+                return <Variables/>
+
+            case (2):
+                return <Math/>
         }
     }
 
