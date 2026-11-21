@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" role="img" aria-labelledby="title desc">
+  <title id="title">Pamācība</title>
+  <desc id="desc">Atvērta grāmata ar atskaņošanas simbolu pamācības atvēršanai.</desc>
+  <path d="M3 4.5A2.5 2.5 0 0 1 5.5 2H11a2 2 0 0 1 1 .27A2 2 0 0 1 13 2h5.5A2.5 2.5 0 0 1 21 4.5V19a1 1 0 0 1-1.35.94A11.4 11.4 0 0 0 15.6 19c-1.3 0-2.25.3-2.9.65a1.5 1.5 0 0 1-1.4 0c-.65-.35-1.6-.65-2.9-.65a11.4 11.4 0 0 0-4.05.94A1 1 0 0 1 3 19V4.5Zm2 0v13.1c1.1-.35 2.23-.6 3.4-.6.98 0 1.85.13 2.6.38V4.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0-.5.5Zm8 0v12.88c.75-.25 1.62-.38 2.6-.38 1.17 0 2.3.25 3.4.6V4.5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0-.5.5Z" fill="#000"/>
+  <path d="m14.5 7 3 2-3 2V7Z" fill="#000"/>
+</svg>

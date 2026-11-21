@@ -4,12 +4,13 @@ import startButtonLogo from '../assets/start-button.svg'
 import cleanButtonLogo from '../assets/clean-button.svg'
 import openFileButtonLogo from '../assets/open-file-button.svg'
 import saveFileButtonLogo from '../assets/save-file-button.svg'
+import tutorialButtonLogo from '../assets/tutorial-button.svg'
 
 import { postCode } from '../API/apiConnection'
 
 import '../style/Tools.css'
 
-function Tools({ text, setText, setCodeResult, setCodeData}) {
+function Tools({ text, setText, setCodeResult, setCodeData, setTutorialState}) {
 
     const fileInput = useRef(null)
 
@@ -76,6 +77,9 @@ function Tools({ text, setText, setCodeResult, setCodeData}) {
                 </button>
                 <button id='saveCodeButton' className='ToolButtons' onClick={saveCode} title='Saglabāt kodu'>
                     <img src={saveFileButtonLogo}/>
+                </button>
+                <button id='tutorialButton' className='ToolButtons' onClick={() => setTutorialState(true)} title='Skatīt instrukciju un uzdevumus'>
+                    <img src={tutorialButtonLogo}/>
                 </button>
             </div>
             <input className='fileInput' ref={fileInput} type='file' accept='.txt' onChange={getCodeFromFile}></input>
