@@ -10,6 +10,7 @@ def createFunction(func: list, line: str, codeLines: list[str], index: int) -> i
     """
 
     returnFunction = False
+    arguments = []
 
     lineObjects = split(line, posix=False)
 
@@ -19,7 +20,11 @@ def createFunction(func: list, line: str, codeLines: list[str], index: int) -> i
 
     # ar regex palīdzību iegūst funkcijas nosaukumu un izmantojamos argumentus
     functionName = str(search(r"(\S+)\(", line).group(1))
-    arguments = list(search(r"\((.*)\)", line).group(1).split(","))
+    argumentsText = search(r"\((.*)\)", line).group(1).strip()
+
+    # skatās vaai funkcijā būs argumenti
+    if argumentsText != "":
+        arguments = argumentsText.split(",")
 
     changedArguments = {}
 
@@ -62,6 +67,7 @@ def startingFunction(functionName: str, functions: list, line: str, mathOp: list
     functionStart, functionEnd = 0, 0
     parameters = []
     functionReturn = None
+    arguments = []
     
     for func in functions:
 
@@ -74,7 +80,12 @@ def startingFunction(functionName: str, functions: list, line: str, mathOp: list
             break
 
     # iegūst izsauktā funkcijas ievietotos parametrus
-    arguments = list(search(r"\((.*)\)", line).group(1).split(","))
+    argumentsText = search(r"\((.*)\)", line).group(1).strip()
+
+    # skatās vai izveidotājā funkcijā būs argumenti
+    if argumentsText != "":
+        arguments = argumentsText.split(",")
+    
     changedArguments = {}
     
     for argIndex, arg in enumerate(arguments):
@@ -128,7 +139,7 @@ def findFunctionStartEndIndex(codeLines: list[str], index: int) -> tuple [int, i
     iegūst funkcijas sākuma un beigu indeksus
     """
 
-    startIndex = index + 2
+    startIndex = index + 1
     endIndex = 0
 
     lines = codeLines[index:]

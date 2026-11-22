@@ -2,6 +2,12 @@ import { useState } from 'react'
 
 import Variables from './tutorialSections/Variables.jsx'
 import Math from './tutorialSections/Math.jsx'
+import Logical from './tutorialSections/Logical.jsx'
+import Comparison from './tutorialSections/Comparison.jsx'
+import ForCycle from './tutorialSections/ForCycle.jsx'
+import WhileCycle from './tutorialSections/WhileCycle.jsx'
+import Function from './tutorialSections/Function.jsx'
+import Array from './tutorialSections/Array.jsx'
 
 import '../style/Tutorial.css'
 
@@ -103,6 +109,24 @@ function Tutorial({ setTutorialState }) {
 
             case (2):
                 return <Math/>
+
+            case (3):
+                return <Logical/>
+
+            case (4):
+                return <Comparison/>
+            
+            case (5):
+                return <ForCycle/>
+
+            case (6):
+                return <WhileCycle/>
+            
+            case (7):
+                return <Function/>
+            
+            case (8):
+                return <Array/>
         }
     }
 
